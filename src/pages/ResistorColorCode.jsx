@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import SMDCode from './SMDCode';
 import AdSlot from '../components/AdSlot';
@@ -31,20 +32,20 @@ const formatR = (R) => {
 };
 
 export default function ResistorColorCode() {
-  const [mode, setMode] = useState('4-band'); // 4-band, 5-band, 6-band, smd
+  const [searchParams] = useSearchParams();
+  const [mode, setMode] = useState('4-band');
   const [sel, setSel] = useState({ b1: 'Brown', b2: 'Black', b3: 'Black', b4: 'Red', b5: 'Gold', b6: 'Brown' });
   const [valInput, setValInput] = useState('');
   const [result, setResult] = useState(null);
   const [matchStatus, setMatchStatus] = useState(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const m = params.get('bands');
+    const m = searchParams.get('bands');
     if (m === '4') setMode('4-band');
     else if (m === '5') setMode('5-band');
     else if (m === '6') setMode('6-band');
     else if (m === 'smd') setMode('smd');
-  }, [window.location.search]);
+  }, [searchParams]);
 
   const handleBand = (band, colorName) => {
     setSel(s => ({ ...s, [band]: colorName }));
@@ -121,13 +122,45 @@ export default function ResistorColorCode() {
 
   if (mode === 'smd') return <SMDCode />;
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Resistor Color Code Calculator",
+    "url": "https://poolcalculator.electropool.online/resistor-color-code",
+    "description": "Decode 4, 5, and 6 band resistor color codes instantly with high precision.",
+    "applicationCategory": "Education",
+    "operatingSystem": "All",
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I read a resistor color code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To read a resistor color code, identify the bands from left to right. The first few bands represent the digits, followed by a multiplier band, and finally a tolerance band. The end with the bands closer together is typically the starting point."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between 4-band and 5-band resistors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 4-band resistor uses the first two bands for digits, the third for the multiplier, and the fourth for tolerance. A 5-band resistor uses the first three bands for digits, the fourth for the multiplier, and the fifth for tolerance, allowing for higher precision."
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <>
       <SEOHead
         title={`${mode.toUpperCase()} Resistor Calculator | PoolCalculator`}
-        description={`Decode ${mode} resistor color codes. High precision calculation for electronics.`}
-        keywords="resistor calculator, color code, 4 band, 5 band, 6 band"
+        description={`Decode ${mode} resistor color codes. High precision calculation for electronics engineering and hobbyists.`}
+        keywords="resistor calculator, color code, 4 band, 5 band, 6 band, ohm calculator"
         canonical="/resistor-color-code"
+        schema={schema}
       />
       <div className="page-wrapper">
         <div className="container">
@@ -149,7 +182,7 @@ export default function ResistorColorCode() {
                 <ColorSelect bandKey="b1" label="Band 1" options={digitColors} />
                 <ColorSelect bandKey="b2" label="Band 2" options={digitColors} />
                 {mode !== '4-band' && <ColorSelect bandKey="b3" label="Band 3" options={digitColors} />}
-                <ColorSelect bandKey={mode === '4-band' ? 'b4' : 'b4'} label="Multiplier" options={multColors} />
+                <ColorSelect bandKey="b4" label="Multiplier" options={multColors} />
                 <ColorSelect bandKey="b5" label="Tolerance" options={tolColors} />
                 {mode === '6-band' && <ColorSelect bandKey="b6" label="Temp. Coeff." options={tempColors} />}
               </div>
@@ -174,7 +207,7 @@ export default function ResistorColorCode() {
             </div>
 
             <div className="hero-image-container">
-              <img src="/images/calculator_resistor.png" alt="Resistor" className="hero-img" />
+              <img src="/images/calculator_resistor.png" alt="Resistor Color Code" className="hero-img" loading="lazy" width="400" height="300" />
             </div>
           </div>
 
@@ -199,10 +232,30 @@ export default function ResistorColorCode() {
 
           <div className="description-section card">
             <div className="description-layout">
-              <div className="description-image"><img src="/images/calculator_descrip_resistor.png" alt="How to read" /></div>
+              <div className="description-image"><img src="/images/calculator_descrip_resistor.png" alt="Resistor band guide" loading="lazy" width="600" height="400" /></div>
               <div className="description-text">
-                <div className="section-title">How to Read Bands</div>
-                <p>Read from the end with the closest band. The first bands are digits, then multiplier, then tolerance.</p>
+                <div className="section-title">Understanding Resistor Color Codes</div>
+                <p>Resistor color codes are a standardized way to identify the resistance value and tolerance of a resistor. Because resistors are often too small to have numbers printed on them, color-coded bands are used instead.</p>
+                
+                <h3>How to Read 4-Band Resistors</h3>
+                <p>For a 4-band resistor, the first two bands represent the <strong>significant digits</strong>. The third band is the <strong>multiplier</strong> (how many zeros to add), and the fourth band is the <strong>tolerance</strong> (the accuracy of the resistor).</p>
+                
+                <h3>Precision 5-Band Resistors</h3>
+                <p>5-band resistors provide higher precision. The first three bands are digits, the fourth is the multiplier, and the fifth is the tolerance. These are commonly found in high-quality audio equipment and medical devices.</p>
+                
+                <h2>Frequently Asked Questions</h2>
+                <div className="faq-item" style={{marginBottom:'20px'}}>
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>Which side do I start reading from?</h3>
+                  <p>Usually, the bands are not perfectly centered. Start reading from the end where the bands are closer to each other. Also, the tolerance band (often Gold or Silver) is typically on the far right.</p>
+                </div>
+                <div className="faq-item" style={{marginBottom:'20px'}}>
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>What does the Gold band mean?</h3>
+                  <p>A gold band in the 4th position indicates a <strong>5% tolerance</strong>, meaning the actual resistance could be 5% higher or lower than the stated value. Gold in the multiplier position means multiplying by 0.1.</p>
+                </div>
+                <div className="faq-item">
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>What is a 6-band resistor?</h3>
+                  <p>A 6-band resistor is like a 5-band one but includes a 6th band for the <strong>Temperature Coefficient</strong>, which indicates how much the resistance changes as the temperature fluctuates.</p>
+                </div>
               </div>
             </div>
           </div>

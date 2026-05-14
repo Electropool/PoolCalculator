@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import AdSlot from '../components/AdSlot';
 
@@ -28,18 +29,18 @@ const formatL = (uH) => {
 };
 
 export default function InductorCode() {
-  const [type, setType] = useState('axial'); // axial (normal/helical) or smd
+  const [searchParams] = useSearchParams();
+  const [type, setType] = useState('axial');
   const [sel, setSel] = useState({ b1: 'Brown', b2: 'Black', b3: 'Black', b4: 'Gold' });
   const [smdCode, setSmdCode] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
 
-  React.useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const t = params.get('type');
+  useEffect(() => {
+    const t = searchParams.get('type');
     if (t === 'smd') setType('smd');
     else if (t === 'helical' || t === 'axial') setType('axial');
-  }, [window.location.search]);
+  }, [searchParams]);
 
   const handleBand = (band, name) => { setSel(s => ({...s, [band]: name})); setResult(null); };
 
@@ -80,13 +81,45 @@ export default function InductorCode() {
     </div>
   );
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Inductor Color Code Calculator",
+    "url": "https://poolcalculator.electropool.online/inductor-code",
+    "description": "Calculate inductor values from color bands or SMD numeric codes. High accuracy for electronic circuit design.",
+    "applicationCategory": "Tool",
+    "operatingSystem": "All",
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to read axial inductor color codes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Axial inductors use 4 color bands. The first two bands are digits, the third is the multiplier (in µH), and the fourth is the tolerance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does 4R7 mean on an inductor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 'R' acts as a decimal point. So 4R7 means 4.7 µH. Similarly, 100 usually means 10 µH (10 followed by 0 zeros)."
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <>
       <SEOHead
         title={`${type.toUpperCase()} Inductor Calculator | PoolCalculator`}
-        description={`Calculate ${type} inductor values instantly. Decode color bands or SMD markings.`}
-        keywords="inductor calculator, smd inductor, axial inductor, color code"
+        description={`Calculate ${type} inductor values instantly. Decode color bands or SMD markings with our professional electronics tool.`}
+        keywords="inductor calculator, smd inductor, axial inductor, color code, microhenry calculator"
         canonical="/inductor-code"
+        schema={schema}
       />
       <div className="page-wrapper">
         <div className="container">
@@ -131,7 +164,7 @@ export default function InductorCode() {
             </div>
 
             <div className="hero-image-container">
-              <img src={type === 'smd' ? '/images/calculator_descrip_resistor.png' : '/images/calculator_inductor.png'} alt="Inductor" className="hero-img" />
+              <img src={type === 'smd' ? '/images/calculator_inductor.png' : '/images/calculator_inductor.png'} alt="Inductor Illustration" className="hero-img" loading="lazy" width="400" height="300" />
             </div>
           </div>
 
@@ -159,18 +192,33 @@ export default function InductorCode() {
           <div className="description-section card">
             <div className="description-layout">
               <div className="description-image">
-                <img src="/images/calculator_descrip_inductor.png" alt="Inductor Info" />
+                <img src="/images/calculator_descrip_inductor.png" alt="Inductor Identification guide" loading="lazy" width="600" height="400" />
               </div>
               <div className="description-text">
-                <div className="section-title">Inductor Identification</div>
-                <p>Inductors come in various packages. Axial inductors use color bands while SMD inductors use numeric codes.</p>
+                <div className="section-title">Inductor Identification Guide</div>
+                <p>Inductors come in various packages and use different systems for marking their value. Axial inductors, which look like resistors but are often green, use color bands. SMD (Surface Mount) inductors use numeric codes printed on the top.</p>
+                
                 <div className="formula-box">
-                  <h3>{type === 'smd' ? 'SMD Code' : 'Axial Formula'}</h3>
+                  <h3>{type === 'smd' ? 'Decoding SMD Codes' : 'Axial Color Formula'}</h3>
                   {type === 'smd' ? (
-                    <p>Digits + Multiplier. 101 = 100 µH. 4R7 = 4.7 µH.</p>
+                    <p>The code typically consists of 3 digits. The first two are significant digits and the third is the multiplier (10^n). For example, <strong>101</strong> is 10 x 10^1 = 100 µH. If there is an <strong>R</strong>, it represents a decimal: 4R7 = 4.7 µH.</p>
                   ) : (
-                    <p>Value (µH) = (Digit 1 Digit 2) × Multiplier</p>
+                    <p>Value (µH) = (Digit 1 Digit 2) × Multiplier. The result is always in <strong>Microhenries (µH)</strong>. The 4th band indicates the tolerance percentage.</p>
                   )}
+                </div>
+
+                <h2>Educational FAQ</h2>
+                <div className="faq-item" style={{marginBottom:'20px'}}>
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>What is the unit of measurement?</h3>
+                  <p>Inductance is measured in <strong>Henries (H)</strong>. However, most common electronic components are measured in millihenries (mH) or microhenries (µH).</p>
+                </div>
+                <div className="faq-item" style={{marginBottom:'20px'}}>
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>Are inductors and resistors read the same?</h3>
+                  <p>Almost. The color code digits are the same, but for inductors, the base unit for the multiplier is microhenries (µH), whereas for resistors, it is ohms (Ω).</p>
+                </div>
+                <div className="faq-item">
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>What is an axial inductor?</h3>
+                  <p>An axial inductor is a leaded component that looks very similar to a resistor. You can often tell them apart by their color (many inductors are light green or blue) and their slightly more rounded shape compared to resistors.</p>
                 </div>
               </div>
             </div>

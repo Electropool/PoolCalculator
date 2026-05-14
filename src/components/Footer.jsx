@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AdSlot from './AdSlot';
 import './Footer.css';
 
 export default function Footer() {
@@ -7,7 +8,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-bg-blur" style={{ backgroundImage: "url('/images/calculator_resistor.png')" }} />
       <div className="container">
-        <div className="ad-slot ad-slot-footer">Advertisement</div>
+        <AdSlot type="footer" />
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">⚡ PoolCalculator</div>

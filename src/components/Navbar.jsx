@@ -80,39 +80,50 @@ export default function Navbar() {
         </button>
 
         <div className={`nav-links${menuOpen ? ' open' : ''}`}>
-          {navItems.map(item => (
-            <div key={item.label} className={`nav-item-container${item.dropdown ? ' has-dropdown' : ''}${activeDropdown === item.label ? ' open' : ''}`}>
-              <div className="nav-link-group">
-                <Link
-                  to={item.path || item.dropdown?.[0].path}
-                  className={`nav-link${location.pathname === item.path ? ' active' : ''}`}
-                >
-                  {item.label}
-                </Link>
-                {item.dropdown && (
-                  <button 
-                    className="dropdown-arrow-btn"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleDropdown(item.label);
-                    }}
+          {navItems.map(item => {
+            const isActive = location.pathname === item.path.split('?')[0];
+            return (
+              <div key={item.label} className={`nav-item-container${item.dropdown ? ' has-dropdown' : ''}${activeDropdown === item.label ? ' open' : ''}`}>
+                <div className="nav-link-group">
+                  <Link
+                    to={item.path}
+                    className={`nav-link${isActive ? ' active' : ''}`}
+                    aria-current={isActive ? 'page' : undefined}
                   >
-                    <span className="arrow">▾</span>
-                  </button>
+                    {item.label}
+                  </Link>
+                  {item.dropdown && (
+                    <button 
+                      className="dropdown-arrow-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleDropdown(item.label);
+                      }}
+                      aria-expanded={activeDropdown === item.label}
+                      aria-label={`Toggle ${item.label} dropdown`}
+                    >
+                      <span className="arrow">▾</span>
+                    </button>
+                  )}
+                </div>
+                
+                {item.dropdown && (
+                  <div className={`dropdown-menu${activeDropdown === item.label ? ' show' : ''}`} role="menu">
+                    {item.dropdown.map(sub => (
+                      <Link 
+                        key={sub.label} 
+                        to={sub.path} 
+                        className={`dropdown-link${location.pathname + location.search === sub.path ? ' active' : ''}`}
+                        role="menuitem"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
                 )}
               </div>
-              
-              {item.dropdown && (
-                <div className={`dropdown-menu${activeDropdown === item.label ? ' show' : ''}`}>
-                  {item.dropdown.map(sub => (
-                    <Link key={sub.label} to={sub.path} className="dropdown-link">
-                      {sub.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </nav>

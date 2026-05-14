@@ -45,6 +45,16 @@ export default function SMDCode() {
     else setError('Unrecognized code. Try: 103, 4R7, 01C');
   };
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SMD Resistor Code Calculator",
+    "url": "https://poolcalculator.electropool.online/smd-code",
+    "description": "Professional SMD resistor code decoder for 3-digit, 4-digit, and EIA-96 markings.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All"
+  };
+
   return (
     <>
       <SEOHead
@@ -52,6 +62,7 @@ export default function SMDCode() {
         description="Decode SMD resistor codes (3-digit, 4-digit, and EIA-96). Enter the code on the resistor to find its value in Ohms instantly."
         keywords="smd resistor code, smd calculator, eia-96 code, 3 digit smd code, 4 digit smd code"
         canonical="/smd-code"
+        schema={schema}
       />
       <div className="page-wrapper">
         <div className="container">
@@ -86,7 +97,7 @@ export default function SMDCode() {
             </div>
 
             <div className="hero-image-container">
-              <img src="/images/calculator_resistor.png" alt="SMD Resistor Examples" className="hero-img" />
+              <img src="/images/calculator_resistor.png" alt="SMD Resistor Examples" className="hero-img" loading="lazy" width="400" height="300" />
             </div>
           </div>
 
@@ -112,7 +123,7 @@ export default function SMDCode() {
           <div className="description-section card">
             <div className="description-layout">
               <div className="description-image">
-                <img src="/images/calculator_descrip_resistor.png" alt="How to read SMD resistors" />
+                <img src="/images/calculator_descrip_resistor.png" alt="How to read SMD resistors chart" loading="lazy" width="600" height="400" />
               </div>
               <div className="description-text">
                 <div className="section-title">Reading SMD Resistor Codes</div>

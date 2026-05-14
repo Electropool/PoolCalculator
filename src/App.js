@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Link, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -18,11 +18,11 @@ import './styles/globals.css';
 
 function NotFound() {
   return (
-    <div style={{textAlign:'center',padding:'80px 20px'}}>
-      <div style={{fontSize:'64px',marginBottom:'16px'}}>⚡</div>
+    <div style={{textAlign:'center',padding:'80px 20px'}} role="alert">
+      <div style={{fontSize:'64px',marginBottom:'16px'}} aria-hidden="true">⚡</div>
       <h1 style={{fontSize:'32px',marginBottom:'12px'}}>404 – Page Not Found</h1>
       <p style={{color:'var(--text-secondary)',marginBottom:'24px'}}>The page you're looking for doesn't exist.</p>
-      <a href="/" className="btn-primary" style={{display:'inline-block',textDecoration:'none',padding:'12px 28px',background:'var(--accent)',color:'var(--bg-primary)',borderRadius:'var(--radius-sm)',fontWeight:'700'}}>Go Home</a>
+      <Link to="/" className="btn-primary" style={{display:'inline-block',textDecoration:'none',padding:'12px 28px',background:'var(--accent)',color:'var(--bg-primary)',borderRadius:'var(--radius-sm)',fontWeight:'700'}}>Go Home</Link>
     </div>
   );
 }

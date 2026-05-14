@@ -1,35 +1,46 @@
 .app-layout-grid {
   display: grid;
-  grid-template-columns: 160px 1fr 160px;
-  gap: 40px;
-  max-width: 1600px;
+  grid-template-columns: 300px 1fr 300px;
+  gap: 32px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
 .main-content-area {
-  min-width: 0; /* Prevents flex/grid blowouts */
+  min-width: 0;
+  padding-bottom: 60px;
 }
 
 .ad-sidebar {
   position: sticky;
-  top: 84px; /* Fixed navbar height (64px) + margin (20px) */
-  height: calc(100vh - 100px);
+  top: 84px;
+  height: fit-content;
+  max-height: calc(100vh - 100px);
   display: flex;
   justify-content: center;
   z-index: 10;
+  transition: var(--transition);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1500px) {
   .app-layout-grid {
+    grid-template-columns: 200px 1fr 200px;
     gap: 20px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+  .app-layout-grid {
+    grid-template-columns: 160px 1fr 160px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
   .app-layout-grid {
     grid-template-columns: 1fr;
-    padding: 0;
+    max-width: 900px;
   }
 
   .ad-sidebar {

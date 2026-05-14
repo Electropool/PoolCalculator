@@ -52,6 +52,37 @@ export default function LEDCalculator() {
 
   const clear = () => { setVs(''); setVf(''); setCurrent(''); setResult(null); setError(''); };
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "LED Resistor Calculator",
+    "url": "https://poolcalculator.electropool.online/led-calculator",
+    "description": "Calculate the perfect series resistor for your LED circuits. Supports standard E24 resistor series.",
+    "applicationCategory": "Tool",
+    "operatingSystem": "All",
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do I need a resistor for an LED?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LEDs are current-driven devices. Without a series resistor to limit the current, the LED will draw too much power from the source, causing it to overheat and burn out instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is LED Forward Voltage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Forward voltage (Vf) is the amount of voltage required to make the LED conduct electricity and light up. It varies by color: Red LEDs typically need 1.8V-2.2V, while Blue and White LEDs need 3.0V-3.6V."
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <>
       <SEOHead
@@ -59,6 +90,7 @@ export default function LEDCalculator() {
         description="Calculate the required series resistor value for your LED circuit. Enter supply voltage, LED forward voltage, and forward current to get resistor value and power rating."
         keywords="LED resistor calculator, LED series resistor, forward voltage calculator, LED current limiting resistor"
         canonical="/led-calculator"
+        schema={schema}
       />
       <div className="page-wrapper">
         <div className="container">
@@ -90,7 +122,7 @@ export default function LEDCalculator() {
             </div>
 
             <div className="hero-image-container">
-              <img src="/images/calculator_resistorforled.png" alt="LED Resistor Illustration" className="hero-img" />
+              <img src="/images/calculator_resistorforled.png" alt="LED Resistor Illustration" className="hero-img" loading="lazy" width="400" height="300" />
             </div>
           </div>
 
@@ -124,7 +156,7 @@ export default function LEDCalculator() {
           <div className="description-section card">
             <div className="description-layout">
               <div className="description-image">
-                <img src="/images/calculator_descrip_resistorforled.png" alt="LED Resistor Formula" />
+                <img src="/images/calculator_descrip_resistorforled.png" alt="LED Resistor Formula diagram" loading="lazy" width="600" height="400" />
               </div>
               <div className="description-text">
                 <div className="section-title">How to Calculate LED Resistors</div>
@@ -142,6 +174,20 @@ export default function LEDCalculator() {
                   <h3>Example</h3>
                   <p>For a 5V supply, a Red LED (2V), and 20mA (0.02A) current:</p>
                   <code>R = (5 - 2) / 0.02 = 150 Ω</code>
+                </div>
+
+                <h2>Educational FAQ & Tips</h2>
+                <div className="faq-item" style={{marginBottom:'20px'}}>
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>What happens if I don't use a resistor?</h3>
+                  <p>Without a resistor, the LED will try to drop the entire supply voltage. Since LEDs have very low internal resistance once they start conducting, the current will spike to dangerous levels, causing the LED to pop or melt within seconds.</p>
+                </div>
+                <div className="faq-item" style={{marginBottom:'20px'}}>
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>How do I know the Forward Voltage (Vf)?</h3>
+                  <p>Check the datasheet for your specific LED. General guidelines: Red is 1.8V-2.2V, Green is 2.1V-3.3V, Blue and White are 3.0V-3.6V. If you're unsure, 2.0V is a safe starting point for most standard LEDs.</p>
+                </div>
+                <div className="faq-item">
+                  <h3 style={{fontSize:'16px', color:'var(--accent)'}}>Why does the calculator suggest a 'Standard' value?</h3>
+                  <p>Resistors are manufactured in specific series (like E24). Since your calculation might result in a value like 153.4 Ω, we suggest the closest available real-world resistor, which in this case would be 150 Ω.</p>
                 </div>
               </div>
             </div>

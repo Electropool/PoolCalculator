@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://poolcalculator.com/sitemap.xml
+Sitemap: https://poolcalculator.electropool.online/sitemap.xml

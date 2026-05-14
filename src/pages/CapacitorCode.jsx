@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import AdSlot from '../components/AdSlot';
 
@@ -7,11 +8,7 @@ const TOLERANCE_CODES = {
   'G':'±2%','H':'±3%','J':'±5%','K':'±10%','M':'±20%','Z':'+80%/-20%'
 };
 
-const VOLTAGE_CODES = {
-  'e':'2.5V','G':'4V','H':'16V','J':'6.3V','K':'8V','L':'10V','M':'20V',
-  'N':'30V','P':'35V','Q':'40V','R':'50V','S':'63V','T':'100V','U':'200V',
-  'V':'250V','W':'300V','X':'400V','Y':'500V'
-};
+// VOLTAGE_CODES removed as it was unused
 
 function formatC(pF) {
   if (pF >= 1e6) return `${(pF/1e6).toFixed(3)} µF`;
@@ -60,22 +57,32 @@ function decodeCapacitor(code) {
 }
 
 export default function CapacitorCode() {
+  const [searchParams] = useSearchParams();
   const [code, setCode] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
   const [type, setType] = useState('ceramic');
 
-  React.useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const t = params.get('type');
+  useEffect(() => {
+    const t = searchParams.get('type');
     if (t === 'film' || t === 'ceramic') setType(t);
-  }, [window.location.search]);
+  }, [searchParams]);
 
   const calculate = () => {
     setError('');
     const res = decodeCapacitor(code);
     if (res) setResult(res);
     else setError('Unrecognized code. Try: 104, 473, 222J');
+  };
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Capacitor Code Calculator",
+    "url": "https://poolcalculator.electropool.online/capacitor-code",
+    "description": "Decode ceramic, film, and polyester capacitor markings. Converts pF, nF, and µF values instantly.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All"
   };
 
   return (
@@ -85,6 +92,7 @@ export default function CapacitorCode() {
         description={`Decode ${type} capacitor codes like 104, 473. Quick reference for capacitor identification and values.`}
         keywords={`${type} capacitor, capacitor code, electronics calculator, pF nF µF`}
         canonical="/capacitor-code"
+        schema={schema}
       />
       <div className="page-wrapper">
         <div className="container">
@@ -129,7 +137,7 @@ export default function CapacitorCode() {
             </div>
 
             <div className="hero-image-container">
-              <img src={type === 'smd' ? '/images/calculator_descrip_resistor.png' : '/images/calculator_capacitor.png'} alt="Capacitor" className="hero-img" />
+              <img src={type === 'smd' ? '/images/calculator_capacitor.png' : '/images/calculator_capacitor.png'} alt="Capacitor Illustration" className="hero-img" loading="lazy" width="400" height="300" />
             </div>
           </div>
 
@@ -165,7 +173,7 @@ export default function CapacitorCode() {
           <div className="description-section card">
             <div className="description-layout">
               <div className="description-image">
-                <img src="/images/calculator_descrip_capacitor.png" alt="Capacitor Identification" />
+                <img src="/images/calculator_descrip_capacitor.png" alt="Capacitor Identification chart" loading="lazy" width="600" height="400" />
               </div>
               <div className="description-text">
                 <div className="section-title">Capacitor Identification Guide</div>
