@@ -156,9 +156,9 @@ export default function ResistorColorCode() {
   return (
     <>
       <SEOHead
-        title={`${mode.toUpperCase()} Resistor Calculator | PoolCalculator`}
-        description={`Decode ${mode} resistor color codes. High precision calculation for electronics engineering and hobbyists.`}
-        keywords="resistor calculator, color code, 4 band, 5 band, 6 band, ohm calculator"
+        title={`${mode === '4-band' ? '4-Band' : mode === '5-band' ? '5-Band' : mode === '6-band' ? '6-Band' : 'SMD'} Resistor Color Code Calculator | PoolCalc`}
+        description={`Decode ${mode.replace('-band', ' band')} resistor color codes instantly. Find resistance value, tolerance${mode === '6-band' ? ', and temperature coefficient' : ''}. Free online resistor calculator.`}
+        keywords="resistor color code calculator, resistor calculator, 4 band resistor, 5 band resistor, resistor value calculator, resistor color decoder, resistor band calculator, resistor tolerance calculator, EIA color code"
         canonical="/resistor-color-code"
         schema={schema}
       />
@@ -170,7 +170,7 @@ export default function ResistorColorCode() {
 
           <div className="calc-layout">
             <div className="card">
-              <div className="section-title">Change Mode</div>
+              <h2 className="section-title">Change Mode</h2>
               <select value={mode} onChange={e => setMode(e.target.value)} style={{marginBottom:'24px', width:'100%'}}>
                 <option value="4-band">4-Band Color Code</option>
                 <option value="5-band">5-Band Color Code</option>
@@ -188,7 +188,7 @@ export default function ResistorColorCode() {
               </div>
 
               <div style={{marginTop:'32px'}}>
-                <div className="section-title">Bidirectional Check</div>
+                <h2 className="section-title">Bidirectional Check</h2>
                 <div className="input-group">
                   <label>Resistance Value (Ω)</label>
                   <div style={{position:'relative'}}>
@@ -207,7 +207,10 @@ export default function ResistorColorCode() {
             </div>
 
             <div className="hero-image-container">
-              <img src="/images/calculator_resistor.png" alt="Resistor Color Code" className="hero-img" loading="lazy" width="400" height="300" />
+              <picture>
+                <source srcSet="/images/calculator_resistor.webp" type="image/webp" />
+                <img src="/images/calculator_resistor.png" alt="Resistor color code bands: digit, multiplier, tolerance" className="hero-img" loading="lazy" width="400" height="300" />
+              </picture>
             </div>
           </div>
 
@@ -232,9 +235,14 @@ export default function ResistorColorCode() {
 
           <div className="description-section card">
             <div className="description-layout">
-              <div className="description-image"><img src="/images/calculator_descrip_resistor.png" alt="Resistor band guide" loading="lazy" width="600" height="400" /></div>
+              <div className="description-image">
+                <picture>
+                  <source srcSet="/images/calculator_descrip_resistor.webp" type="image/webp" />
+                  <img src="/images/calculator_descrip_resistor.png" alt="How to read resistor color codes chart" loading="lazy" width="600" height="400" />
+                </picture>
+              </div>
               <div className="description-text">
-                <div className="section-title">Understanding Resistor Color Codes</div>
+                <h2 className="section-title">Understanding Resistor Color Codes</h2>
                 <p>Resistor color codes are a standardized way to identify the resistance value and tolerance of a resistor. Because resistors are often too small to have numbers printed on them, color-coded bands are used instead.</p>
                 
                 <h3>How to Read 4-Band Resistors</h3>
@@ -259,6 +267,7 @@ export default function ResistorColorCode() {
               </div>
             </div>
           </div>
+          <RelatedTools currentPath="/resistor-color-code" />
         </div>
       </div>
     </>

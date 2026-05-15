@@ -1,0 +1,488 @@
+
+================================================================================
+  BLOG_CONTENT_PLAN.txt
+  Website: https://poolcalculator.electropool.online/
+  Strategy: Long-form SEO content targeting electronics students, engineers,
+            Arduino users, hobbyists, and PCB designers
+  Date: May 2026
+================================================================================
+
+BLOG IMPLEMENTATION RECOMMENDATION:
+  Create a /blog route in React Router.
+  Add blog posts as static .jsx pages (one per article) or integrate a simple
+  CMS. For maximum SEO with a React SPA, generate blog posts as static HTML
+  using react-snap or consider a headless CMS (Contentful, Sanity).
+
+  Minimum target: 2-3 articles per month.
+  First 6 months: Focus entirely on QUICK WIN keywords (KD < 25).
+
+
+================================================================================
+ CATEGORY 1 — RESISTOR GUIDES (12 articles)
+================================================================================
+
+ARTICLE 1
+  Title:     "How to Read Resistor Color Codes: Complete Beginner's Guide (2026)"
+  URL:       /blog/how-to-read-resistor-color-codes
+  Target KW: "how to read resistor color code" (Vol: 5,400 | KD: 25)
+  Secondary: "resistor color code chart", "4 band resistor", "resistor decoder"
+  Intent:    Informational — Beginner
+  Rank Potential: HIGH (within 2-3 months for new site)
+  Word Count: 1,500-2,000 words
+  Content:   Full color-by-color table, memory tricks (ROY G BIV), common values,
+             practice examples, link to /resistor-color-code calculator
+  CTA:       "Use our free Resistor Color Code Calculator →"
+
+ARTICLE 2
+  Title:     "4-Band vs 5-Band vs 6-Band Resistors: What's the Difference?"
+  URL:       /blog/4-band-vs-5-band-vs-6-band-resistor
+  Target KW: "4 band resistor calculator" (Vol: 8,100 | KD: 35)
+  Secondary: "5 band resistor", "precision resistor", "6 band temperature coefficient"
+  Intent:    Informational — Intermediate
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+  Content:   Comparison table, when to use each, precision applications, tolerance
+             vs temperature coefficient explanation, real-world examples
+  CTA:       "Try the multi-band calculator →"
+
+ARTICLE 3
+  Title:     "What Resistor Should I Use for My LED? (Complete Guide)"
+  URL:       /blog/what-resistor-for-led
+  Target KW: "what resistor do i need for LED" (Vol: 4,400 | KD: 22)
+  Secondary: "LED resistor formula", "LED series resistor", "E24 resistor"
+  Intent:    Informational — High Commercial
+  Rank Potential: VERY HIGH (low KD, very specific intent)
+  Word Count: 1,500 words
+  Content:   Step-by-step formula, common LED colors and forward voltages,
+             E24 standard values explained, solved examples for 5V/9V/12V,
+             what happens without a resistor
+  CTA:       "Use the LED Resistor Calculator →"
+
+ARTICLE 4
+  Title:     "Understanding EIA-96 SMD Resistor Codes: Complete Reference"
+  URL:       /blog/eia-96-smd-resistor-code-guide
+  Target KW: "EIA-96 resistor code" (Vol: 1,600 | KD: 20)
+  Secondary: "EIA96 resistor", "SMD resistor code lookup", "1% precision SMD"
+  Intent:    Informational — Technical
+  Rank Potential: VERY HIGH (very low KD, niche specific)
+  Word Count: 1,800 words
+  Content:   Complete EIA-96 table (96 base values), multiplier letter meanings,
+             comparison with 3-digit and 4-digit systems, practical examples,
+             when EIA-96 is used (high precision 1% resistors)
+  CTA:       "Decode any EIA-96 code instantly →"
+
+ARTICLE 5
+  Title:     "Resistor Color Code Chart: Quick Reference Guide"
+  URL:       /blog/resistor-color-code-chart
+  Target KW: "resistor color code chart" (Vol: 9,900 | KD: 35)
+  Secondary: "resistor color chart", "resistor bands color", "resistor reference"
+  Intent:    Informational — Reference
+  Rank Potential: MEDIUM (more competitive, but table content ranks well)
+  Word Count: 800-1,000 words + large HTML table
+  Content:   Interactive color reference table (use plain HTML for SEO),
+             printable version note, common resistor values, mnemonic devices
+  CTA:       "Use the interactive calculator →"
+
+ARTICLE 6
+  Title:     "How to Decode SMD Resistor Markings (3-Digit, 4-Digit, EIA-96)"
+  URL:       /blog/how-to-decode-smd-resistor-markings
+  Target KW: "how to read SMD resistor code" (Vol: 3,600 | KD: 20)
+  Secondary: "surface mount resistor code", "SMD code decoder", "0402 0603 resistor"
+  Intent:    Informational — Technical
+  Rank Potential: VERY HIGH
+  Word Count: 1,200 words
+  CTA:       "Use the SMD Resistor Calculator →"
+
+ARTICLE 7
+  Title:     "Most Common Resistor Values: E12, E24, E48, E96 Series Explained"
+  URL:       /blog/common-resistor-values-e12-e24-e48-e96
+  Target KW: "common resistor values" (Vol: 2,400 | KD: 22)
+  Secondary: "E24 resistor series", "standard resistor values", "preferred resistor values"
+  Rank Potential: HIGH
+  Word Count: 1,400 words
+  Content:   Full E12, E24 tables, why preferred values exist, how to find
+             nearest E24 value, real-world component sourcing tips
+
+ARTICLE 8
+  Title:     "Resistor Color Code Memory Tricks: Never Forget the Order Again"
+  URL:       /blog/resistor-color-code-memory-tricks
+  Target KW: "resistor color code memory trick" (Vol: 2,200 | KD: 18)
+  Rank Potential: VERY HIGH (very low KD)
+  Word Count: 800 words
+  Content:   Popular mnemonics (BB ROY Great Britain Very Good Wife),
+             visualization techniques, printable cheat sheet
+
+ARTICLE 9
+  Title:     "Gold vs Silver Band on Resistor: Tolerance Explained"
+  URL:       /blog/gold-silver-band-resistor-tolerance
+  Target KW: "gold band resistor meaning" (Vol: 1,800 | KD: 15)
+  Rank Potential: VERY HIGH (extremely low KD)
+  Word Count: 600-800 words
+
+ARTICLE 10
+  Title:     "Resistor in Series vs Parallel: Calculator and Formulas"
+  URL:       /blog/resistors-series-parallel-calculator
+  Target KW: "resistors in series calculator" (Vol: 6,600 | KD: 38)
+  Rank Potential: MEDIUM
+  Word Count: 1,500 words (consider adding a calculator tool for this)
+
+ARTICLE 11
+  Title:     "What Are Pull-Up and Pull-Down Resistors? (Arduino Guide)"
+  URL:       /blog/pull-up-pull-down-resistors-arduino
+  Target KW: "pull up resistor calculator" (Vol: 3,600 | KD: 28)
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+
+ARTICLE 12
+  Title:     "Resistor Wattage Rating: How to Choose the Right Power Rating"
+  URL:       /blog/resistor-wattage-rating-guide
+  Target KW: "resistor wattage calculator" (Vol: 2,900 | KD: 26)
+  Rank Potential: HIGH
+  Word Count: 1,000 words
+
+
+================================================================================
+ CATEGORY 2 — LED & LIGHTING GUIDES (8 articles)
+================================================================================
+
+ARTICLE 13
+  Title:     "LED Resistor Calculator for Arduino: 5V, 3.3V, 9V, 12V Guide"
+  URL:       /blog/led-resistor-calculator-arduino
+  Target KW: "LED resistor calculator Arduino" (Vol: 3,600 | KD: 18)
+  Secondary: "Arduino LED resistor", "5V LED resistor", "3.3V LED resistor"
+  Intent:    Informational — High engagement (maker audience)
+  Rank Potential: VERY HIGH
+  Word Count: 1,500 words
+  Content:   Dedicated sections for each voltage (3.3V, 5V, 9V, 12V),
+             forward voltage table for common LED colors, solved examples
+             for each Arduino/Raspberry Pi power rail, wiring diagrams (ASCII art)
+  CTA:       "Calculate your exact LED resistor instantly →"
+
+ARTICLE 14
+  Title:     "LED Forward Voltage Chart: All Colors, All Types (2026)"
+  URL:       /blog/led-forward-voltage-chart
+  Target KW: "LED forward voltage" (Vol: 5,400 | KD: 30)
+  Rank Potential: HIGH
+  Word Count: 1,000 words + comprehensive table
+  Content:   Table of all LED colors with Vf ranges, IR LEDs, UV LEDs,
+             white LEDs, RGB LEDs
+
+ARTICLE 15
+  Title:     "What Happens If You Don't Use a Resistor with an LED?"
+  URL:       /blog/led-without-resistor
+  Target KW: "LED without resistor" (Vol: 2,900 | KD: 18)
+  Rank Potential: VERY HIGH
+  Word Count: 800 words
+  Content:   Physics explanation, what actually happens (burned LED),
+             common mistakes, why even a small resistor helps
+
+ARTICLE 16
+  Title:     "How to Wire Multiple LEDs in Series vs Parallel"
+  URL:       /blog/multiple-leds-series-parallel
+  Target KW: "multiple LED series parallel calculator" (Vol: 3,200 | KD: 25)
+  Rank Potential: HIGH
+  Word Count: 1,400 words
+
+ARTICLE 17
+  Title:     "Best Resistor for White LED: Complete Guide"
+  URL:       /blog/resistor-for-white-led
+  Target KW: "white LED resistor calculator" (Vol: 2,200 | KD: 16)
+  Rank Potential: VERY HIGH (extremely low KD)
+  Word Count: 800 words
+
+ARTICLE 18
+  Title:     "RGB LED Resistor Calculator: One Resistor Per Color Explained"
+  URL:       /blog/rgb-led-resistor-calculator
+  Target KW: "RGB LED resistor calculator" (Vol: 2,200 | KD: 20)
+  Rank Potential: VERY HIGH
+  Word Count: 1,000 words
+
+ARTICLE 19
+  Title:     "LED Flasher Circuit: Calculating Component Values"
+  URL:       /blog/led-flasher-circuit-calculator
+  Target KW: "LED flasher circuit" (Vol: 4,400 | KD: 32)
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+
+ARTICLE 20
+  Title:     "Infrared LED Resistor Calculator: TV Remote and Sensor Circuits"
+  URL:       /blog/infrared-led-resistor-calculator
+  Target KW: "IR LED resistor calculator" (Vol: 1,800 | KD: 15)
+  Rank Potential: VERY HIGH
+  Word Count: 800 words
+
+
+================================================================================
+ CATEGORY 3 — CAPACITOR GUIDES (7 articles)
+================================================================================
+
+ARTICLE 21
+  Title:     "How to Read Capacitor Codes: Complete Guide (pF, nF, µF)"
+  URL:       /blog/how-to-read-capacitor-codes
+  Target KW: "how to read capacitor code" (Vol: 5,400 | KD: 22)
+  Rank Potential: VERY HIGH
+  Word Count: 1,500 words
+  Content:   3-digit system explained, tolerance letter codes, voltage codes,
+             pF/nF/µF conversion, common values (104=100nF, 473=47nF etc.)
+  CTA:       "Use the Capacitor Code Calculator →"
+
+ARTICLE 22
+  Title:     "Ceramic Capacitor 104: What is the Value in µF and nF?"
+  URL:       /blog/ceramic-capacitor-104-value
+  Target KW: "ceramic capacitor 104" (Vol: 2,800 | KD: 22)
+  Rank Potential: VERY HIGH (specific question, very targetable)
+  Word Count: 600-800 words
+
+ARTICLE 23
+  Title:     "Ceramic vs Film vs Electrolytic Capacitors: When to Use Which"
+  URL:       /blog/ceramic-film-electrolytic-capacitors-guide
+  Target KW: "types of capacitors" (Vol: 8,100 | KD: 40)
+  Rank Potential: MEDIUM
+  Word Count: 1,500 words
+
+ARTICLE 24
+  Title:     "Capacitor pF to nF to µF Conversion: Quick Reference"
+  URL:       /blog/capacitor-pf-nf-uf-conversion
+  Target KW: "capacitor pF to nF conversion" (Vol: 3,200 | KD: 20)
+  Rank Potential: VERY HIGH
+  Word Count: 800 words + conversion table
+
+ARTICLE 25
+  Title:     "Bypass and Decoupling Capacitor Values: Engineer's Guide"
+  URL:       /blog/bypass-decoupling-capacitor-values
+  Target KW: "bypass capacitor calculator" (Vol: 2,200 | KD: 25)
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+
+ARTICLE 26
+  Title:     "How to Identify a Blown Capacitor on a PCB"
+  URL:       /blog/how-to-identify-blown-capacitor
+  Target KW: "blown capacitor how to identify" (Vol: 2,900 | KD: 20)
+  Rank Potential: HIGH
+  Word Count: 800 words
+
+ARTICLE 27
+  Title:     "SMD Capacitor Code Chart: Complete Reference Guide"
+  URL:       /blog/smd-capacitor-code-chart
+  Target KW: "SMD capacitor code" (Vol: 2,200 | KD: 22)
+  Rank Potential: HIGH
+  Word Count: 1,000 words + table
+
+
+================================================================================
+ CATEGORY 4 — INDUCTOR & COIL GUIDES (5 articles)
+================================================================================
+
+ARTICLE 28
+  Title:     "Inductor Color Code Guide: Read 4-Band Inductors Like a Pro"
+  URL:       /blog/inductor-color-code-guide
+  Target KW: "inductor color code" (Vol: 2,400 | KD: 20)
+  Rank Potential: VERY HIGH
+  Word Count: 1,200 words
+
+ARTICLE 29
+  Title:     "SMD Inductor Code Decoder: 3-Digit and R-Notation Explained"
+  URL:       /blog/smd-inductor-code-decoder
+  Target KW: "SMD inductor code" (Vol: 1,600 | KD: 16)
+  Rank Potential: VERY HIGH (very low KD)
+  Word Count: 800 words
+
+ARTICLE 30
+  Title:     "Inductors vs Resistors: How to Tell Them Apart"
+  URL:       /blog/inductor-vs-resistor-identification
+  Target KW: "inductor vs resistor" (Vol: 1,900 | KD: 18)
+  Rank Potential: VERY HIGH
+  Word Count: 600 words
+
+ARTICLE 31
+  Title:     "LC Filter Calculator: Inductors and Capacitors in Circuits"
+  URL:       /blog/lc-filter-calculator
+  Target KW: "LC filter calculator" (Vol: 4,400 | KD: 35)
+  Rank Potential: HIGH
+  Word Count: 1,400 words (consider adding a calculator tool)
+
+ARTICLE 32
+  Title:     "Toroidal vs Ferrite Core Inductor: Choosing the Right Type"
+  URL:       /blog/toroidal-ferrite-inductor-guide
+  Target KW: "toroidal inductor calculator" (Vol: 2,200 | KD: 28)
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+
+
+================================================================================
+ CATEGORY 5 — ARDUINO & MAKER CONTENT (8 articles)
+================================================================================
+This category targets the highest-volume electronics audience — Arduino users.
+These bring significant social sharing potential and Discord/forum mentions.
+
+ARTICLE 33
+  Title:     "The Complete Arduino Electronics Starter Guide: All Formulas"
+  URL:       /blog/arduino-electronics-formulas-guide
+  Target KW: "Arduino electronics guide" (Vol: 6,600 | KD: 30)
+  Rank Potential: HIGH
+  Word Count: 2,000 words (pillar content, links to all calculator pages)
+  CTA:       Links to every calculator on the site
+
+ARTICLE 34
+  Title:     "5V vs 3.3V Arduino: Resistor and LED Calculations"
+  URL:       /blog/arduino-5v-3v3-resistor-calculations
+  Target KW: "Arduino 3.3V LED resistor" (Vol: 2,900 | KD: 18)
+  Rank Potential: VERY HIGH
+  Word Count: 1,200 words
+
+ARTICLE 35
+  Title:     "How to Use a Multimeter to Check Resistors and Capacitors"
+  URL:       /blog/multimeter-check-resistors-capacitors
+  Target KW: "how to check resistor with multimeter" (Vol: 8,100 | KD: 28)
+  Rank Potential: HIGH
+  Word Count: 1,400 words
+
+ARTICLE 36
+  Title:     "Breadboard Wiring Guide: Component Placement and Calculations"
+  URL:       /blog/breadboard-wiring-guide
+  Target KW: "breadboard circuit guide" (Vol: 5,400 | KD: 30)
+  Rank Potential: HIGH
+  Word Count: 1,500 words
+
+ARTICLE 37
+  Title:     "Raspberry Pi GPIO Resistor Calculator: Safe Logic Level Shifting"
+  URL:       /blog/raspberry-pi-gpio-resistor-calculator
+  Target KW: "Raspberry Pi resistor" (Vol: 4,400 | KD: 28)
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+
+ARTICLE 38
+  Title:     "Top 10 Electronics Calculators Every Engineer Should Bookmark"
+  URL:       /blog/best-electronics-calculators
+  Target KW: "best electronics calculators online" (Vol: 2,200 | KD: 20)
+  Rank Potential: VERY HIGH (also great for link building)
+  Word Count: 1,200 words (includes PoolCalc tools #1-5)
+
+ARTICLE 39
+  Title:     "Ohm's Law Calculator: Formula, Examples & Practical Guide"
+  URL:       /blog/ohms-law-calculator-guide
+  Target KW: "Ohm's law calculator" (Vol: 33,100 | KD: 45)
+  Rank Potential: MEDIUM-HIGH (high volume, worth pursuing)
+  Word Count: 1,800 words (include an Ohm's Law calculator component)
+
+ARTICLE 40
+  Title:     "Voltage Divider Calculator: Formula and Circuit Design"
+  URL:       /blog/voltage-divider-calculator
+  Target KW: "voltage divider calculator" (Vol: 22,000 | KD: 42)
+  Rank Potential: MEDIUM (competitive but high traffic reward)
+  Word Count: 1,500 words (consider adding a voltage divider tool)
+
+
+================================================================================
+ CATEGORY 6 — BEGINNER / EDUCATIONAL CONTENT (10 articles)
+================================================================================
+
+ARTICLE 41
+  Title:     "Electronics for Absolute Beginners: Components Explained"
+  URL:       /blog/electronics-for-beginners
+  Target KW: "electronics for beginners" (Vol: 12,100 | KD: 48)
+  Rank Potential: MEDIUM (higher KD but massive volume)
+  Word Count: 2,500 words (comprehensive pillar content)
+
+ARTICLE 42
+  Title:     "Passive vs Active Electronic Components: Explained Simply"
+  URL:       /blog/passive-vs-active-components
+  Target KW: "passive electronic components" (Vol: 4,400 | KD: 30)
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+
+ARTICLE 43
+  Title:     "Kirchhoff's Voltage Law (KVL) Calculator and Examples"
+  URL:       /blog/kirchhoffs-voltage-law-calculator
+  Target KW: "Kirchhoff's voltage law calculator" (Vol: 3,600 | KD: 35)
+  Rank Potential: HIGH
+  Word Count: 1,400 words
+
+ARTICLE 44
+  Title:     "Power Dissipation Calculator: Resistors and Circuits"
+  URL:       /blog/power-dissipation-calculator
+  Target KW: "power dissipation calculator" (Vol: 6,600 | KD: 35)
+  Rank Potential: HIGH
+  Word Count: 1,200 words (add an online calculator tool)
+
+ARTICLE 45
+  Title:     "Reading Electronic Component Datasheets: Beginner's Guide"
+  URL:       /blog/reading-electronic-datasheets
+  Target KW: "how to read electronic datasheet" (Vol: 2,900 | KD: 22)
+  Rank Potential: VERY HIGH
+  Word Count: 1,500 words
+
+ARTICLE 46
+  Title:     "Why Do Resistors Have Color Codes? (History & IEC Standard)"
+  URL:       /blog/why-resistors-have-color-codes
+  Target KW: "why do resistors have color codes" (Vol: 1,800 | KD: 15)
+  Rank Potential: VERY HIGH
+  Word Count: 800 words
+
+ARTICLE 47
+  Title:     "Soldering Resistors and Capacitors: Beginner PCB Assembly Guide"
+  URL:       /blog/soldering-resistors-capacitors-guide
+  Target KW: "how to solder resistors" (Vol: 3,600 | KD: 25)
+  Rank Potential: HIGH
+  Word Count: 1,200 words
+
+ARTICLE 48
+  Title:     "Common Electronics Mistakes Beginners Make (And How to Avoid)"
+  URL:       /blog/common-electronics-mistakes-beginners
+  Target KW: "electronics mistakes beginners" (Vol: 2,200 | KD: 20)
+  Rank Potential: VERY HIGH
+  Word Count: 1,200 words
+
+ARTICLE 49
+  Title:     "How to Test Electronic Components with a Multimeter"
+  URL:       /blog/test-electronic-components-multimeter
+  Target KW: "how to test electronic components" (Vol: 4,400 | KD: 28)
+  Rank Potential: HIGH
+  Word Count: 1,500 words
+
+ARTICLE 50
+  Title:     "Free Electronics Resources: Best Websites, Tools & References"
+  URL:       /blog/free-electronics-resources
+  Target KW: "free electronics resources" (Vol: 1,900 | KD: 18)
+  Rank Potential: VERY HIGH (also great for link building)
+  Word Count: 1,200 words (list PoolCalc tools + curated external resources)
+
+
+================================================================================
+ CONTENT PUBLISHING SCHEDULE (6-Month Roadmap)
+================================================================================
+
+MONTH 1 — Quick Wins (Publish 4 articles)
+  Week 1: Article 3  — "What Resistor Should I Use for My LED?" (KD:22)
+  Week 2: Article 22 — "Ceramic Capacitor 104 Value" (KD:22)
+  Week 3: Article 13 — "LED Resistor Calculator for Arduino" (KD:18)
+  Week 4: Article 4  — "EIA-96 SMD Resistor Code Guide" (KD:20)
+
+MONTH 2 — Beginner Magnets (Publish 4 articles)
+  Week 1: Article 1  — "How to Read Resistor Color Codes" (KD:25)
+  Week 2: Article 21 — "How to Read Capacitor Codes" (KD:22)
+  Week 3: Article 9  — "Gold vs Silver Band Resistor" (KD:15)
+  Week 4: Article 15 — "What Happens Without LED Resistor" (KD:18)
+
+MONTH 3 — Arduino Audience (Publish 4 articles)
+  Week 1: Article 33 — "Arduino Electronics Starter Guide" (KD:30)
+  Week 2: Article 34 — "5V vs 3.3V Arduino Calculations" (KD:18)
+  Week 3: Article 38 — "Top 10 Electronics Calculators" (KD:20)
+  Week 4: Article 39 — "Ohm's Law Calculator Guide" (KD:45)
+
+MONTHS 4-6 — Fill remaining articles by priority score.
+
+EACH ARTICLE MUST INCLUDE:
+  1. Target keyword in H1 (exact or near-exact match)
+  2. Target keyword in first paragraph within first 100 words
+  3. Target keyword in meta description
+  4. Secondary keywords in H2/H3 subheadings
+  5. Internal link to the relevant calculator tool (minimum 2 per article)
+  6. External link to a reference source (Wikipedia, IEEE, Adafruit)
+  7. At least 1 image with keyword-rich alt text
+  8. FAQ section with 3-5 questions (add FAQPage schema)
+  9. Word count: minimum 800 words (target 1,200-1,500)
+
+================================================================================
+END OF BLOG_CONTENT_PLAN.txt
+================================================================================

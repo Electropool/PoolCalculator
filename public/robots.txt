@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /cdn-cgi/
+Disallow: /404
 
+# Host
+Host: https://poolcalculator.electropool.online
+
+# Sitemaps
 Sitemap: https://poolcalculator.electropool.online/sitemap.xml

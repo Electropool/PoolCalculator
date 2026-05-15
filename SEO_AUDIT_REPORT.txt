@@ -1,0 +1,708 @@
+
+================================================================================
+  SEO_AUDIT_REPORT.txt
+  Website: https://poolcalculator.electropool.online/
+  Stack: React 18 + CRA (react-scripts 5.0.1) + React Router v6
+  Audit Date: May 2026
+  Auditor: Senior Technical SEO Engineer
+================================================================================
+
+
+================================================================================
+ EXECUTIVE SUMMARY
+================================================================================
+
+The site has implemented many of the foundational fixes from the previous audit
+round (correct canonical domain, sitemap, robots.txt, favicon, og tags, schema
+on some pages). This is a strong improvement. However, several high-impact SEO
+issues remain that are preventing Google from ranking the site for its target
+electronics calculator keywords.
+
+OVERALL SEO SCORE: 61/100  (up from 38/100 in previous audit)
+
+The site is a pure Client-Side Rendering (CSR) React SPA. This is the single
+largest structural blocker to Google ranking. Every other fix applied is
+important, but until Googlebot can reliably read meaningful content from the
+HTML it receives, ranking will be capped.
+
+
+================================================================================
+ SECTION 1 — TECHNICAL SEO: CRAWLABILITY & INDEXABILITY
+================================================================================
+
+-------------------------------------------------------------------------------
+ 1.1 ROBOTS.TXT
+-------------------------------------------------------------------------------
+STATUS: PASS
+FILE: public/robots.txt
+
+Current content:
+  User-agent: *
+  Allow: /
+  Sitemap: https://poolcalculator.electropool.online/sitemap.xml
+
+ASSESSMENT: Correct. Domain is now fixed. Sitemap URL is valid.
+No pages are being blocked.
+
+IMPROVEMENT OPPORTUNITY:
+  Add Crawl-delay for low-authority new site to avoid wasting crawl budget:
+    User-agent: Googlebot
+    Crawl-delay: 1
+
+  Also explicitly allow the /images/ path to help Google Images:
+    User-agent: Googlebot-Image
+    Allow: /images/
+
+-------------------------------------------------------------------------------
+ 1.2 SITEMAP.XML
+-------------------------------------------------------------------------------
+STATUS: PASS (present, all routes included)
+FILE: public/sitemap.xml
+
+ASSESSMENT: All 10 routes are listed with correct domain, lastmod, and
+priority values. This is a major improvement.
+
+ISSUES REMAINING:
+  1. No <changefreq> tag on any URL — Google uses this as a crawl freshness hint.
+     Adding it signals how often to re-crawl each page.
+  2. Static pages have priority 0.5 (About, Contact) and 0.3 (Privacy, Terms).
+     These are correctly lower priority.
+  3. Calculator pages have priority 0.8 — good. Homepage is 1.0 — correct.
+
+RECOMMENDED IMPROVEMENTS:
+
+  Add <changefreq> to each URL:
+    Homepage:          weekly
+    Calculator pages:  monthly
+    About/Contact:     yearly
+    Privacy/Terms:     yearly
+
+  Updated sitemap structure example:
+    <url>
+      <loc>https://poolcalculator.electropool.online/led-calculator</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+    </url>
+
+  PRIORITY UPGRADE: Change all calculator pages from 0.8 to 0.9.
+  The calculator pages ARE your money pages. Give them priority 0.9.
+
+  SUBMIT: After updating, re-submit via Google Search Console:
+    GSC → Sitemaps → Add new sitemap → submit URL.
+
+-------------------------------------------------------------------------------
+ 1.3 SPA CRAWLABILITY (BIGGEST TECHNICAL SEO ISSUE)
+-------------------------------------------------------------------------------
+STATUS: FAIL — HIGH IMPACT
+SEVERITY: CRITICAL
+
+The site is a pure CSR (Client-Side Rendering) React SPA. When Googlebot or
+any crawler requests any URL, the server sends back a nearly empty HTML page:
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title>PoolCalculator – Fast & Simple Electronics Calculators</title>
+    ...
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+  </html>
+
+This is what the raw HTML response looks like BEFORE JavaScript executes.
+
+Googlebot CAN execute JavaScript ("second wave indexing"), but:
+  1. It processes JS-rendered pages slower than static HTML
+  2. New/low-authority domains have limited crawl budget
+  3. Dynamic content loaded after user interaction (calc results) is NEVER
+     indexed
+  4. The title in index.html is the same for ALL pages until JS runs
+  5. Any crawl error or JavaScript exception = empty indexed page
+
+CURRENT PAGE METADATA STATE IN index.html:
+  Title:       "PoolCalculator – Fast & Simple Electronics Calculators" (same for all routes)
+  Description: "Free online electronics calculators for students and engineers."
+
+This means if Googlebot crawls /led-calculator without executing JS, it sees
+the homepage title and description. This creates duplicate metadata across all
+routes from the crawler's perspective.
+
+SOLUTION: Implement Static Prerendering (react-snap)
+
+  STEP 1: Install react-snap
+    npm install --save-dev react-snap
+
+  STEP 2: Add postbuild script to package.json:
+    "scripts": {
+      "build": "react-scripts build",
+      "postbuild": "react-snap"
+    }
+
+  STEP 3: Add react-snap config to package.json:
+    "reactSnap": {
+      "source": "build",
+      "destination": "build",
+      "include": [
+        "/",
+        "/led-calculator",
+        "/resistor-color-code",
+        "/smd-code",
+        "/capacitor-code",
+        "/inductor-code",
+        "/about",
+        "/contact",
+        "/privacy-policy",
+        "/terms"
+      ],
+      "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"]
+    }
+
+  STEP 4: Update src/index.js to use hydrate instead of render:
+    import { hydrateRoot, createRoot } from 'react-dom/client';
+    const rootElement = document.getElementById('root');
+    if (rootElement.hasChildNodes()) {
+      hydrateRoot(rootElement, <React.StrictMode><App /></React.StrictMode>);
+    } else {
+      createRoot(rootElement).render(<React.StrictMode><App /></React.StrictMode>);
+    }
+
+  RESULT: After running npm run build, each route will have its own
+  pre-rendered HTML file with correct title, description, canonical, and
+  visible content — fully readable by Googlebot without JS execution.
+
+  ALTERNATIVE (if react-snap causes issues):
+    Add a server-side prerender step using Puppeteer, or consider migrating
+    the project to Next.js in the future for proper SSG/ISR support.
+
+IMPACT OF FIXING: This single change could improve indexing completeness
+from ~40% to ~95% of pages and dramatically improve SERP appearance timelines.
+
+-------------------------------------------------------------------------------
+ 1.4 CANONICAL URLS
+-------------------------------------------------------------------------------
+STATUS: PASS
+FILE: src/components/SEOHead.jsx
+
+Base URL is now correctly set to:
+  const base = 'https://poolcalculator.electropool.online';
+
+All canonical tags point to the correct domain. This is fixed.
+
+REMAINING ISSUE: Query parameter routes
+  The site has routes like /resistor-color-code?bands=4, ?bands=5, ?bands=6
+  and /capacitor-code?type=ceramic, ?type=film, ?type=smd.
+  
+  All query param variants correctly canonicalize to the base route
+  (e.g., /resistor-color-code), which is the correct behavior. PASS.
+
+-------------------------------------------------------------------------------
+ 1.5 INDEX HTML — MISSING SEO-CRITICAL STATIC CONTENT
+-------------------------------------------------------------------------------
+STATUS: FAIL — HIGH IMPACT
+
+The <body> of index.html contains ONLY:
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+
+Google processes noscript content, but it's only one sentence.
+
+ACTION: Add a minimal static content section to public/index.html that
+renders visibly to Googlebot's first-wave HTML crawl. This ensures that even
+if JavaScript fails to execute, Google still indexes something meaningful:
+
+  Add inside <body>, BEFORE <div id="root">:
+
+  <div id="seo-content" style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+    <h1>Free Electronics Calculators – Resistor, LED, Capacitor, Inductor</h1>
+    <p>PoolCalculator provides free online electronics calculators for students,
+    hobbyists, and engineers. Tools include resistor color code decoder, LED
+    resistor calculator, SMD resistor code decoder, capacitor code decoder, and
+    inductor calculator. No signup required. All calculations run in your browser.</p>
+    <ul>
+      <li><a href="/resistor-color-code">Resistor Color Code Calculator</a></li>
+      <li><a href="/led-calculator">LED Resistor Calculator</a></li>
+      <li><a href="/smd-code">SMD Resistor Code Decoder</a></li>
+      <li><a href="/capacitor-code">Capacitor Code Calculator</a></li>
+      <li><a href="/inductor-code">Inductor Color Code Calculator</a></li>
+    </ul>
+  </div>
+
+  NOTE: Use CSS positioning (not display:none or visibility:hidden) to hide
+  this from visual display while keeping it crawlable. CSS-hidden content IS
+  indexed by Google. display:none reduces indexing weight.
+
+-------------------------------------------------------------------------------
+ 1.6 SPA REWRITE — NGINX CONFIG
+-------------------------------------------------------------------------------
+STATUS: PASS (per README)
+
+Nginx config has try_files $uri /index.html which ensures all React Router
+routes serve the SPA correctly. This prevents 404s on direct URL access.
+
+ACTION: Verify this is deployed correctly on the live server.
+
+-------------------------------------------------------------------------------
+ 1.7 www REDIRECT
+-------------------------------------------------------------------------------
+STATUS: FAIL
+
+www.poolcalculator.electropool.online returns NXDOMAIN.
+While this may not cause ranking penalties, it's better practice to configure
+the www version to 301 redirect to the non-www version.
+
+If using Cloudflare: Add a DNS CNAME for www pointing to the root domain and
+use a Cloudflare Page Rule or Redirect Rule:
+  URL: www.poolcalculator.electropool.online/*
+  Destination: https://poolcalculator.electropool.online/$1
+
+
+================================================================================
+ SECTION 2 — ON-PAGE SEO: METADATA & CONTENT
+================================================================================
+
+-------------------------------------------------------------------------------
+ 2.1 TITLE TAGS
+-------------------------------------------------------------------------------
+STATUS: MOSTLY PASS — minor improvements needed
+
+CONFIRMED CURRENT TITLES:
+  /                    "PoolCalculator – Fast & Simple Electronics Calculators"
+  /led-calculator      "LED Resistor Calculator Online – Free Tool | PoolCalculator"
+  /resistor-color-code Dynamic: "[4-band/5-band/6-band] Resistor Calculator | PoolCalculator"
+                       (Still generates mixed-case like "4-band Resistor Calculator"
+                       which is acceptable after the previous fix)
+  /smd-code            "SMD Resistor Code Calculator – 3 & 4 Digit, EIA-96 | PoolCalculator"
+  /capacitor-code      Dynamic: "[Ceramic/Film] Capacitor Code Calculator | PoolCalculator"
+  /inductor-code       Dynamic: "[Axial/SMD] Inductor Calculator | PoolCalculator"
+  /about               "About PoolCalculator – Free Electronics Tools for Students"
+
+ISSUES:
+  1. Homepage title lacks primary target keyword "electronics calculator" in
+     natural form. "Fast & Simple" is not a keyword users search for.
+     RECOMMENDED: "Free Electronics Calculators – Resistor, LED, Capacitor & More | PoolCalc"
+     This includes: "free electronics calculators", "resistor", "LED", "capacitor"
+     and keeps it under 60 characters: 68 chars — slightly long. Trim if needed:
+     "Free Electronics Calculators: Resistor, LED, Capacitor | PoolCalc" (66 chars)
+
+  2. Resistor page: When mode=4-band, title is "4-band Resistor Calculator | PoolCalculator"
+     Missing keyword: "color code". Add it:
+     RECOMMENDED: "4-Band Resistor Color Code Calculator | PoolCalc"
+
+  3. All titles use "PoolCalculator" as brand suffix. This is fine, but
+     "PoolCalculator" sounds like a pool maintenance tool to users who don't
+     know the brand. The brand name itself may cause misclick dilution in SERPs.
+     Consider adding "Electronics" to the brand display: "PoolCalc | Electronics"
+
+TITLE TAG LENGTH TARGETS: 50–60 characters (Google truncates at ~580px width)
+
+-------------------------------------------------------------------------------
+ 2.2 META DESCRIPTIONS
+-------------------------------------------------------------------------------
+STATUS: PASS — acceptable, but improvements available
+
+Current descriptions adequately describe each page. They are within the 155
+character limit on all confirmed pages.
+
+IMPROVEMENTS:
+  Homepage: Current description doesn't include a CTA.
+    Current: "Free online electronics tools for students, hobbyists, and engineers.
+              Resistor color codes, LED calculators, Ohm's law, and more."
+    Better:  "Free electronics calculators for resistors, LEDs, capacitors, and
+              inductors. Instant results. No signup. Used by engineers & students."
+    (148 chars — good length)
+
+  Resistor: Current dynamic template generates thin descriptions for some modes.
+    Better:  "Decode 4-band, 5-band, and 6-band resistor color codes instantly.
+              Enter color bands to find resistance, tolerance, and temperature
+              coefficient. Free online tool."
+
+  SMD Code: Add E24/EIA-96 keywords to description.
+
+-------------------------------------------------------------------------------
+ 2.3 OPENGRAPH & TWITTER CARDS
+-------------------------------------------------------------------------------
+STATUS: PASS
+
+SEOHead.jsx now correctly includes:
+  og:title, og:description, og:type, og:url, og:image (1200x630), og:locale
+  og:image:width, og:image:height, og:site_name
+  twitter:card="summary_large_image", twitter:title, twitter:description, twitter:image
+
+All pointing to the correct domain. This is fully implemented.
+
+REMAINING: Verify og-image.png at /public/og-image.png is actually a meaningful
+1200x630 image showing the tool interface, not a blank or placeholder image.
+
+-------------------------------------------------------------------------------
+ 2.4 HEADING HIERARCHY
+-------------------------------------------------------------------------------
+STATUS: PARTIAL FAIL
+
+Each page has one <h1> per route — CORRECT.
+
+ISSUES:
+  1. "section-title" div elements are used as visual headings throughout but
+     are NOT semantic heading elements. Example in LEDCalculator.jsx:
+       <div className="section-title">Circuit Parameters</div>
+       <div className="section-title">Results</div>
+       <div className="section-title">How to Calculate LED Resistors</div>
+     These should be <h2> elements for SEO heading hierarchy.
+
+  2. In FAQ sections: h3 tags correctly used inside h2 parent — GOOD.
+
+  3. Home.jsx "Why PoolCalculator?" section uses h4 for card titles with no
+     parent h2/h3. This breaks heading hierarchy.
+     FIX: Add <h2>Why PoolCalculator?</h2> above the why-grid.
+
+  RECOMMENDED HEADING STRUCTURE (per calculator page):
+    <h1>LED Resistor Calculator</h1>
+      <h2>Circuit Parameters</h2>       (replace section-title div)
+      <h2>Results</h2>                  (replace section-title div)
+      <h2>How to Calculate LED Resistors</h2>
+        <h3>The Formula</h3>
+        <h3>Example</h3>
+        <h3>Frequently Asked Questions</h3>
+          <h4>Why do I need a resistor?</h4>  (FAQ items)
+
+-------------------------------------------------------------------------------
+ 2.5 CONTENT QUALITY & WORD COUNT
+-------------------------------------------------------------------------------
+STATUS: PARTIAL PASS
+
+Current content word counts per page (JSX file word count — actual rendered
+text is approximately 30-50% of this):
+  Home:              ~379 words (JSX) → ~150 rendered words  — THIN
+  LED Calculator:    ~885 words (JSX) → ~380 rendered words  — ACCEPTABLE
+  Resistor Code:     ~1411 words (JSX) → ~600 rendered words — GOOD
+  SMD Code:          ~564 words (JSX) → ~220 rendered words  — THIN
+  Capacitor Code:    ~736 words (JSX) → ~290 rendered words  — THIN
+  Inductor Code:     ~1077 words (JSX) → ~440 rendered words — ACCEPTABLE
+
+THIN CONTENT PAGES (needs expansion for AdSense & ranking):
+  - SMD Code: Has only 2 short educational paragraphs. No FAQ.
+  - Capacitor Code: Has formula box and 3-sentence type descriptions. No FAQ.
+  - Home: Landing page has no substantial educational text.
+
+REQUIRED ADDITION per page for Google content quality threshold:
+  Each calculator page should have 500-1000 words of VISIBLE text content.
+  This is not just for AdSense — Google treats tool pages with thin surrounding
+  content as "low quality" and ranks them below content-rich competitors.
+
+-------------------------------------------------------------------------------
+ 2.6 KEYWORD PRESENCE IN CONTENT
+-------------------------------------------------------------------------------
+STATUS: FAIL — MANY TARGET KEYWORDS MISSING FROM PAGE CONTENT
+
+Critical keywords NOT appearing in current rendered text:
+
+  Page              Missing Keywords
+  --------          ----------------
+  Home              "ohm law", "voltage divider", "electronics engineering",
+                    "free online calculator", "engineering tools"
+  LED page          "Arduino LED", "LED forward voltage table", "5V LED",
+                    "3.3V LED", "LED resistor value", "current limiting"
+  Resistor page     "EIA color code standard", "IEC resistor", "resistor finder",
+                    "tolerance calculator", "resistor ohm value"
+  SMD page          "PCB resistor", "0402 0603 0805 resistor", "precision resistor",
+                    "EIA-96 table", "surface mount resistor decoder"
+  Capacitor page    "ceramic capacitor 104", "capacitor nF pF conversion",
+                    "film capacitor value", "capacitor identification"
+  Inductor page     "choke inductor", "ferrite inductor", "toroidal inductor",
+                    "µH mH conversion", "inductor value finder"
+
+RECOMMENDATION: Add a "Common Values & Reference Tables" section to each
+calculator page using semantic HTML tables containing these keywords naturally.
+
+-------------------------------------------------------------------------------
+ 2.7 IMAGE SEO
+-------------------------------------------------------------------------------
+STATUS: PARTIAL PASS
+
+CONFIRMED IMPROVEMENTS:
+  All images now have loading="lazy" and width/height attributes — GOOD.
+  All images have alt tags — GOOD.
+
+REMAINING ISSUES:
+  1. Alt text is generic: "LED Resistor Illustration", "Resistor" etc.
+     Improve with keyword-rich descriptive alt text:
+     OLD: alt="LED Resistor Illustration"
+     NEW: alt="LED resistor circuit diagram showing series resistor calculation formula"
+
+  2. Images are still large PNGs (~500-789 KB each). The previous audit
+     recommended converting to WebP. This has NOT been done yet.
+     Calculator pages load 2 images each = 1-1.5 MB per page.
+     ACTION: Convert to WebP using: npx @squoosh/cli --webp auto public/images/*.png
+     Expected: 60-80% size reduction → 80-150 KB per image.
+
+  3. main_footer.png (789 KB) still used as blurred background in Footer.
+     This file loads on EVERY page. A 50x50px thumbnail would work identically.
+     ACTION: Replace with public/images/footer_blur_tiny.jpg at 50x50px.
+
+  4. No structured image schema (ImageObject) — optional but beneficial.
+
+-------------------------------------------------------------------------------
+ 2.8 INTERNAL LINKING
+-------------------------------------------------------------------------------
+STATUS: PASS — good, but improvable
+
+Current internal link structure:
+  Homepage → All 5 calculator pages (tool cards) — GOOD
+  Footer → All calculators + static pages — GOOD
+  Navbar → All calculators via dropdown — GOOD
+
+MISSING:
+  1. No "Related Calculators" section at bottom of each calculator page.
+     After using the LED calculator, users aren't guided to the Resistor page.
+     Adding cross-links between tools boosts both SEO and time-on-site.
+
+  2. No breadcrumbs rendered on page. BreadcrumbList schema exists in some
+     pages but no visual breadcrumb component. Visual breadcrumbs:
+     a) help users understand site structure
+     b) are shown in Google SERPs (breadcrumb rich results)
+
+  RECOMMENDED BREADCRUMB COMPONENT:
+    function Breadcrumb({ items }) {
+      return (
+        <nav aria-label="Breadcrumb" style={{fontSize:'13px',color:'var(--text-muted)',marginBottom:'16px'}}>
+          {items.map((item, i) => (
+            <span key={item.path}>
+              {i > 0 && <span style={{margin:'0 6px'}}>›</span>}
+              {i === items.length - 1
+                ? <span>{item.label}</span>
+                : <Link to={item.path} style={{color:'var(--accent)'}}>{item.label}</Link>
+              }
+            </span>
+          ))}
+        </nav>
+      );
+    }
+
+  Usage on LED page:
+    <Breadcrumb items={[
+      {path:'/', label:'Home'},
+      {path:'/led-calculator', label:'LED Resistor Calculator'}
+    ]} />
+
+-------------------------------------------------------------------------------
+ 2.9 STRUCTURED DATA / SCHEMA
+-------------------------------------------------------------------------------
+STATUS: PARTIAL PASS
+
+CONFIRMED IMPLEMENTED:
+  LEDCalculator.jsx: WebApplication + FAQPage schema — GOOD
+  SMDCode.jsx: WebApplication schema — PARTIAL (no FAQ)
+  Resistor, Capacitor, Inductor pages: Schema present — PARTIAL
+
+MISSING SCHEMAS:
+  1. Organization schema in SEOHead.jsx (global, inject once):
+     {
+       "@context": "https://schema.org",
+       "@type": "Organization",
+       "name": "PoolCalculator",
+       "url": "https://poolcalculator.electropool.online",
+       "logo": "https://poolcalculator.electropool.online/android-chrome-512x512.png",
+       "contactPoint": {
+         "@type": "ContactPoint",
+         "contactType": "customer support",
+         "email": "arpankar077@gmail.com"
+       },
+       "sameAs": ["https://discord.gg/QbCcpKCZPF"]
+     }
+
+  2. WebSite schema with SearchAction (sitelinks search box opportunity):
+     {
+       "@context": "https://schema.org",
+       "@type": "WebSite",
+       "name": "PoolCalculator",
+       "url": "https://poolcalculator.electropool.online",
+       "potentialAction": {
+         "@type": "SearchAction",
+         "target": {
+           "@type": "EntryPoint",
+           "urlTemplate": "https://poolcalculator.electropool.online/resistor-color-code?q={search_term_string}"
+         },
+         "query-input": "required name=search_term_string"
+       }
+     }
+
+  3. SMD, Capacitor, and Inductor pages need FAQPage schema added.
+     (Only LED and Resistor pages have it — see section 3 of this report
+     for the exact FAQ content to add to each page.)
+
+  4. BreadcrumbList schema: Add to every calculator page SEOHead call:
+     {
+       "@context": "https://schema.org",
+       "@type": "BreadcrumbList",
+       "itemListElement": [
+         {"@type":"ListItem","position":1,"name":"Home","item":"https://poolcalculator.electropool.online"},
+         {"@type":"ListItem","position":2,"name":"LED Resistor Calculator","item":"https://poolcalculator.electropool.online/led-calculator"}
+       ]
+     }
+
+-------------------------------------------------------------------------------
+ 2.10 ACCESSIBILITY SEO
+-------------------------------------------------------------------------------
+STATUS: PARTIAL FAIL
+
+Accessibility improvements have been partially implemented (aria-label on
+hamburger, role="alert" on 404 page, loading="lazy" on images).
+
+REMAINING ISSUES:
+  1. Form inputs lack htmlFor/id associations (label to input linking)
+  2. No aria-live region on calculator results (confirmed not added yet)
+  3. "section-title" divs should be semantic heading elements (see 2.4)
+  4. Color swatch divs have no aria-label
+
+These affect SEO because Google uses accessibility as a quality signal and
+accessibility errors reduce core web vitals scores.
+
+
+================================================================================
+ SECTION 3 — CORE WEB VITALS SEO
+================================================================================
+
+-------------------------------------------------------------------------------
+ 3.1 LCP (Largest Contentful Paint)
+-------------------------------------------------------------------------------
+ESTIMATED: 3-5 seconds on mobile — NEEDS IMPROVEMENT (target: <2.5s)
+
+PRIMARY CAUSES:
+  1. Large unoptimized PNG images (500-789 KB each)
+  2. Google Fonts loading (render-blocking in initial state)
+  3. JavaScript bundle must execute before meaningful content renders
+
+FIXES:
+  1. Convert images to WebP (most impactful — saves 600-900 KB per page)
+  2. Fonts now use media="print" onload trick — ALREADY IMPLEMENTED — GOOD
+  3. Add rel="preload" for LCP image (the hero calculator image):
+     In index.html:
+       <link rel="preload" as="image" href="/images/calculator_resistorforled.png" />
+     But this is different per page. With prerendering, each page's HTML can
+     include the correct preload for its own LCP element.
+  4. Implement react-snap prerendering (biggest LCP improvement possible)
+
+-------------------------------------------------------------------------------
+ 3.2 CLS (Cumulative Layout Shift)
+-------------------------------------------------------------------------------
+ESTIMATED: 0.05-0.15 — needs improvement (target: <0.1)
+
+IMPROVEMENTS ALREADY IMPLEMENTED:
+  Width/height on images — GOOD. This prevents image-related layout shift.
+
+REMAINING CAUSES:
+  1. AdSlot placeholders expand when real ads load (common AdSense CLS issue)
+     FIX: Reserve exact ad space with min-height on ad containers:
+     .ad-container { min-height: 90px; } /* for banner */
+     .ad-left .ad-container, .ad-right .ad-container { min-height: 600px; }
+
+  2. Google Fonts may cause FOUT (Flash of Unstyled Text) before loading
+     The media="print" onload trick is good, but set font-display: optional
+     in @font-face for zero CLS impact (though this may use system fonts more).
+
+-------------------------------------------------------------------------------
+ 3.3 FCP (First Contentful Paint)
+-------------------------------------------------------------------------------
+ESTIMATED: 1.5-3 seconds — borderline (target: <1.8s)
+
+PRIMARY CAUSES:
+  1. JavaScript bundle download and execution before any content renders
+  2. React bootstrap time
+
+FIX: react-snap prerendering eliminates this entirely — HTML is served with
+content already rendered, so FCP matches TTFB + HTML parse time.
+
+-------------------------------------------------------------------------------
+ 3.4 MOBILE SEO
+-------------------------------------------------------------------------------
+STATUS: PASS
+
+Responsive breakpoints are correctly implemented:
+  - 900px: 3-column → 1-column, hide sidebar ads
+  - 768px: Reduce card padding, stack calc-layout
+  - 600px: Reduce hero padding
+
+The site passes basic mobile friendliness criteria. Verify with:
+  Google Mobile Friendly Test: search.google.com/test/mobile-friendly
+
+
+================================================================================
+ SECTION 4 — DOMAIN & BRAND SEO
+================================================================================
+
+-------------------------------------------------------------------------------
+ 4.1 DOMAIN NAME SEO IMPACT
+-------------------------------------------------------------------------------
+ISSUE: HIGH IMPACT
+
+Domain: poolcalculator.electropool.online
+
+This domain name has multiple SEO challenges:
+  1. "poolcalculator" suggests swimming pool tools, not electronics
+  2. "electropool" is not a recognized brand in electronics
+  3. Users searching for "pool calculator" may visit by mistake → high bounce
+  4. "electropool.online" uses .online TLD — lower trust than .com/.io/.net
+  5. Users searching "electronics calculator" will see domain as potentially
+     unrelated and may not click
+
+LONG-TERM RECOMMENDATION: Register a domain like:
+  - poolcalc.io
+  - electroniccalc.com
+  - resistorcalc.com
+  - eleccalc.com
+
+SHORT-TERM MITIGATION: Ensure all titles and descriptions clearly say
+"Electronics Calculator" so users understand the content BEFORE clicking.
+
+-------------------------------------------------------------------------------
+ 4.2 BRAND SIGNAL BUILDING
+-------------------------------------------------------------------------------
+STATUS: NOT STARTED
+
+Brand signals help Google trust and rank your site:
+  1. Submit to directories: Google My Business (as online service), ProductHunt
+  2. Get listed on engineering resource pages (engineering.stackexchange.com sidebar)
+  3. Get a mention on a hobby electronics forum (r/electronics, EEVblog forum)
+  4. Create a GitHub repository link pointing to the site
+  5. Add Discord server description linking to site
+
+These external signals tell Google the brand is real and actively used.
+
+
+================================================================================
+ SECTION 5 — SEO AUDIT SUMMARY SCORECARD
+================================================================================
+
+| Check                         | Status        | Score    | Priority  |
+|-------------------------------|---------------|----------|-----------|
+| robots.txt                    | PASS          | 90/100   | —         |
+| sitemap.xml                   | PASS (needs improvement) | 75/100 | MEDIUM |
+| SPA prerendering              | FAIL          | 0/100    | CRITICAL  |
+| Canonical URLs                | PASS          | 95/100   | —         |
+| Title tags                    | PARTIAL PASS  | 65/100   | HIGH      |
+| Meta descriptions             | PASS          | 75/100   | MEDIUM    |
+| OG / Twitter tags             | PASS          | 90/100   | —         |
+| Heading hierarchy             | PARTIAL FAIL  | 55/100   | HIGH      |
+| Content depth (calc pages)    | PARTIAL PASS  | 60/100   | HIGH      |
+| Keyword coverage in content   | FAIL          | 40/100   | CRITICAL  |
+| Image SEO (alt text, WebP)    | PARTIAL PASS  | 55/100   | HIGH      |
+| Internal linking              | PASS          | 75/100   | MEDIUM    |
+| Schema markup                 | PARTIAL PASS  | 65/100   | HIGH      |
+| Core Web Vitals (est.)        | PARTIAL FAIL  | 55/100   | HIGH      |
+| Mobile SEO                    | PASS          | 85/100   | —         |
+| Accessibility SEO             | PARTIAL FAIL  | 55/100   | MEDIUM    |
+| Brand/Domain SEO              | FAIL          | 20/100   | MEDIUM    |
+| www redirect                  | FAIL          | 0/100    | LOW       |
+
+OVERALL SEO SCORE: 61/100
+
+TOP 3 ACTIONS FOR MAXIMUM SEO IMPACT:
+  [1] Implement react-snap prerendering — unlocks proper Google indexing
+  [2] Add rich educational content (500-1000 words) to SMD, Capacitor pages
+  [3] Add keyword-rich content sections with target electronics keywords
+
+================================================================================
+END OF SEO_AUDIT_REPORT.txt
+================================================================================

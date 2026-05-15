@@ -115,9 +115,9 @@ export default function InductorCode() {
   return (
     <>
       <SEOHead
-        title={`${type.toUpperCase()} Inductor Calculator | PoolCalculator`}
-        description={`Calculate ${type} inductor values instantly. Decode color bands or SMD markings with our professional electronics tool.`}
-        keywords="inductor calculator, smd inductor, axial inductor, color code, microhenry calculator"
+        title={`${type.charAt(0).toUpperCase() + type.slice(1)} Inductor Calculator – Color Code & SMD | PoolCalc`}
+        description={`Calculate ${type} inductor values instantly. Decode 4-band color codes or numeric SMD markings (101, 4R7) with our professional electronics tool.`}
+        keywords="inductor calculator, inductor color code, SMD inductor code, axial inductor, microhenry calculator, inductor value finder, electronics tools"
         canonical="/inductor-code"
         schema={schema}
       />
@@ -130,7 +130,7 @@ export default function InductorCode() {
 
           <div className="calc-layout">
             <div className="card">
-              <div className="section-title">Change Mode</div>
+              <h2 className="section-title">Change Mode</h2>
               <select value={type} onChange={e => setType(e.target.value)} style={{marginBottom:'24px', width:'100%'}}>
                 <option value="axial">Axial Color Code</option>
                 <option value="smd">SMD Inductor Code</option>
@@ -138,7 +138,7 @@ export default function InductorCode() {
 
               {type === 'axial' ? (
                 <>
-                  <div className="section-title">Color Bands</div>
+                  <h2 className="section-title">Color Bands</h2>
                   <ColorSelect bandKey="b1" label="Band 1" options={digitColors} />
                   <ColorSelect bandKey="b2" label="Band 2" options={digitColors} />
                   <ColorSelect bandKey="b3" label="Multiplier" options={multColors} />
@@ -147,7 +147,7 @@ export default function InductorCode() {
                 </>
               ) : (
                 <>
-                  <div className="section-title">SMD Marking</div>
+                  <h2 className="section-title">SMD Marking</h2>
                   <div className="input-group">
                     <label>Inductor Code (e.g. 101, 4R7)</label>
                     <input 
@@ -164,7 +164,10 @@ export default function InductorCode() {
             </div>
 
             <div className="hero-image-container">
-              <img src={type === 'smd' ? '/images/calculator_inductor.png' : '/images/calculator_inductor.png'} alt="Inductor Illustration" className="hero-img" loading="lazy" width="400" height="300" />
+              <picture>
+                <source srcSet="/images/calculator_inductor.webp" type="image/webp" />
+                <img src="/images/calculator_inductor.png" alt="Inductor component illustration: axial and SMD types" className="hero-img" loading="lazy" width="400" height="300" />
+              </picture>
             </div>
           </div>
 
@@ -192,10 +195,13 @@ export default function InductorCode() {
           <div className="description-section card">
             <div className="description-layout">
               <div className="description-image">
-                <img src="/images/calculator_descrip_inductor.png" alt="Inductor Identification guide" loading="lazy" width="600" height="400" />
+                <picture>
+                  <source srcSet="/images/calculator_descrip_inductor.webp" type="image/webp" />
+                  <img src="/images/calculator_descrip_inductor.png" alt="Inductor identification guide: color bands vs numeric SMD codes" loading="lazy" width="600" height="400" />
+                </picture>
               </div>
               <div className="description-text">
-                <div className="section-title">Inductor Identification Guide</div>
+                <h2 className="section-title">Inductor Identification Guide</h2>
                 <p>Inductors come in various packages and use different systems for marking their value. Axial inductors, which look like resistors but are often green, use color bands. SMD (Surface Mount) inductors use numeric codes printed on the top.</p>
                 
                 <div className="formula-box">
@@ -223,6 +229,7 @@ export default function InductorCode() {
               </div>
             </div>
           </div>
+          <RelatedTools currentPath="/inductor-code" />
         </div>
       </div>
     </>

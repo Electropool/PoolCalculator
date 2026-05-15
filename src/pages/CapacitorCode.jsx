@@ -80,17 +80,39 @@ export default function CapacitorCode() {
     "@type": "WebApplication",
     "name": "Capacitor Code Calculator",
     "url": "https://poolcalculator.electropool.online/capacitor-code",
-    "description": "Decode ceramic, film, and polyester capacitor markings. Converts pF, nF, and µF values instantly.",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "All"
+    "description": "Free online capacitor code decoder. Convert ceramic and film capacitor markings to pF, nF, and µF instantly.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does 104 mean on a capacitor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The code 104 means 10 × 10⁴ picofarads = 100,000pF = 100nF = 0.1µF. This is the most common bypass capacitor value in digital electronics."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I convert capacitor pF to nF to µF?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1µF = 1,000nF = 1,000,000pF. 1nF = 1,000pF. So 100nF = 0.1µF = 100,000pF."
+          }
+        }
+      ]
+    }
   };
 
   return (
     <>
       <SEOHead
-        title={`${type.charAt(0).toUpperCase() + type.slice(1)} Capacitor Code Calculator | PoolCalculator`}
-        description={`Decode ${type} capacitor codes like 104, 473. Quick reference for capacitor identification and values.`}
-        keywords={`${type} capacitor, capacitor code, electronics calculator, pF nF µF`}
+        title="Capacitor Code Calculator – Decode Ceramic, Film & SMD Values | PoolCalc"
+        description="Decode any capacitor code to get the value in pF, nF, and µF. Supports ceramic (EIA 3-digit), film capacitors, and tolerance letter codes. Free online capacitor decoder."
+        keywords="capacitor code calculator, ceramic capacitor calculator, capacitor value finder, capacitor decoder, capacitor pF nF uF calculator, ceramic capacitor 104, film capacitor value, capacitor marking calculator"
         canonical="/capacitor-code"
         schema={schema}
       />
@@ -103,14 +125,14 @@ export default function CapacitorCode() {
 
           <div className="calc-layout">
             <div className="card">
-              <div className="section-title">Change Mode</div>
+              <h2 className="section-title">Change Mode</h2>
               <select value={type} onChange={e => setType(e.target.value)} style={{marginBottom:'24px', width:'100%'}}>
                 <option value="ceramic">Ceramic Capacitor</option>
                 <option value="film">Film Capacitor</option>
                 <option value="smd">SMD Capacitor</option>
               </select>
 
-              <div className="section-title">Enter Capacitor Code</div>
+              <h2 className="section-title">Enter Capacitor Code</h2>
               <div className="input-group">
                 <label>Code (e.g. 104, 222J)</label>
                 <input

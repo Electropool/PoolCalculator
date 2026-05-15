@@ -46,10 +46,54 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="PoolCalculator – Fast & Simple Electronics Calculators"
-        description="Free online electronics tools for students, hobbyists, and engineers. Resistor color codes, LED calculators, Ohm's law, and more."
-        keywords="electronics calculator, resistor calculator, led resistor calculator, ohms law, voltage divider, smd code"
+        title="Free Electronics Calculators – Resistor, LED, Capacitor & Inductor | PoolCalc"
+        description="Free online electronics calculators for students and engineers. Resistor color codes, LED resistor values, SMD codes, capacitor decoders. Instant results, no signup."
+        keywords="electronics calculator, free electronics tools, resistor calculator, LED resistor calculator, capacitor calculator, inductor calculator, SMD resistor code, electronics engineering tools, online electronics calculator"
         canonical="/"
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "name": "PoolCalculator",
+              "alternateName": "PoolCalc",
+              "url": "https://poolcalculator.electropool.online",
+              "description": "Free online electronics calculators for resistors, LEDs, capacitors, and inductors.",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://poolcalculator.electropool.online/resistor-color-code?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            },
+            {
+              "@type": "Organization",
+              "name": "PoolCalculator",
+              "url": "https://poolcalculator.electropool.online",
+              "logo": "https://poolcalculator.electropool.online/android-chrome-512x512.png",
+              "sameAs": ["https://discord.gg/QbCcpKCZPF"],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer support",
+                "email": "arpankar077@gmail.com"
+              }
+            },
+            {
+              "@type": "ItemList",
+              "name": "Free Electronics Calculators",
+              "description": "A complete collection of free online electronics calculators",
+              "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Resistor Color Code Calculator", "url": "https://poolcalculator.electropool.online/resistor-color-code"},
+                {"@type": "ListItem", "position": 2, "name": "LED Resistor Calculator", "url": "https://poolcalculator.electropool.online/led-calculator"},
+                {"@type": "ListItem", "position": 3, "name": "SMD Resistor Code Calculator", "url": "https://poolcalculator.electropool.online/smd-code"},
+                {"@type": "ListItem", "position": 4, "name": "Capacitor Code Calculator", "url": "https://poolcalculator.electropool.online/capacitor-code"},
+                {"@type": "ListItem", "position": 5, "name": "Inductor Color Code Calculator", "url": "https://poolcalculator.electropool.online/inductor-code"}
+              ]
+            }
+          ]
+        }}
       />
       <div className="home-hero">
         <div className="container">
@@ -108,6 +152,60 @@ export default function Home() {
               <p>No accounts, no data collection. Everything runs in your browser.</p>
             </div>
           </div>
+        </section>
+
+        <section className="seo-content-section" style={{
+          padding: '60px 0',
+          borderTop: '1px solid var(--border-subtle)'
+        }}>
+          <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '16px', color: 'var(--text-primary)' }}>
+            Free Electronics Calculators for Engineers & Students
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }}>
+            PoolCalculator provides a complete suite of free online electronics calculators designed
+            for hobbyists, students, and professional electrical engineers. Whether you need to decode
+            a resistor color code, calculate the correct series resistor for an LED circuit, decode
+            surface-mount (SMD) component markings, or identify capacitor and inductor values — our
+            tools deliver instant, accurate results without any registration or downloads.
+          </p>
+          <h3 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>
+            What Can You Calculate?
+          </h3>
+          <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }}>
+            Our <Link to="/resistor-color-code" style={{ color: 'var(--accent)' }}>Resistor Color Code Calculator</Link> supports
+            4-band, 5-band, and 6-band resistors including temperature coefficient decoding. The
+            bidirectional mode lets you input a resistance value and instantly see the corresponding
+            color bands — perfect for students learning electronics fundamentals.
+          </p>
+          <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }}>
+            Our <Link to="/led-calculator" style={{ color: 'var(--accent)' }}>LED Resistor Calculator</Link> calculates
+            the exact series resistor needed to safely drive any LED from any supply voltage (3.3V,
+            5V, 9V, 12V). It automatically suggests the nearest E24 standard resistor value and
+            calculates power dissipation, helping you choose the right wattage rating.
+          </p>
+          <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }}>
+            The <Link to="/smd-code" style={{ color: 'var(--accent)' }}>SMD Resistor Code Calculator</Link> decodes
+            all surface-mount resistor markings including 3-digit codes, 4-digit codes, EIA-96 codes
+            (01A format), and R-notation values (4R7 = 4.7Ω). Essential for PCB repair and component
+            identification.
+          </p>
+          <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }}>
+            Identify capacitor values with our <Link to="/capacitor-code" style={{ color: 'var(--accent)' }}>Capacitor Code Calculator</Link>,
+            which converts 3-digit ceramic capacitor codes to picofarads, nanofarads, and microfarads.
+            The <Link to="/inductor-code" style={{ color: 'var(--accent)' }}>Inductor Calculator</Link> handles
+            both axial (color-coded) and SMD inductors, giving results in µH, mH, or H.
+          </p>
+          <h3 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>
+            Why Use PoolCalculator?
+          </h3>
+          <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '15px' }}>
+            Unlike complex simulation software, PoolCalculator focuses on giving you the specific
+            answer you need in seconds. All calculations run locally in your browser — no data is
+            sent to any server, and no account is required. The site works on mobile, tablet, and
+            desktop, making it the ideal companion for bench work, lectures, and exam preparation.
+            Used by electronics students, Arduino hobbyists, PCB designers, and professional
+            electrical engineers worldwide.
+          </p>
         </section>
 
         <div className="container">

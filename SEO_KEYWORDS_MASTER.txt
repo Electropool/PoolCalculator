@@ -1,0 +1,332 @@
+
+================================================================================
+  SEO_KEYWORDS_MASTER.txt
+  Website: https://poolcalculator.electropool.online/
+  Niche: Electronics Calculators / Engineering Tools
+  Date: May 2026
+================================================================================
+
+LEGEND:
+  Vol    = Estimated monthly search volume (Global)
+  KD     = Keyword Difficulty (0-100, lower = easier to rank)
+  CPC    = Estimated cost-per-click USD (higher = more valuable traffic)
+  Intent = Search intent (Info / Navigational / Transactional / Commercial)
+  Page   = Best landing page for this keyword
+
+
+================================================================================
+ TIER 1 — PRIMARY KEYWORDS (Core Brand + Tool Keywords)
+================================================================================
+These are the highest-volume keywords that define the site's main topic.
+They are competitive but MUST be targeted on the homepage and key pages.
+
+| Keyword                         | Vol     | KD  | CPC   | Intent | Page            |
+|---------------------------------|---------|-----|-------|--------|-----------------|
+| electronics calculator          | 18,000  | 42  | $0.90 | Info   | /               |
+| resistor calculator             | 22,000  | 38  | $0.75 | Info   | /resistor-color-code |
+| LED resistor calculator         | 12,000  | 35  | $0.85 | Info   | /led-calculator |
+| capacitor calculator            | 9,500   | 40  | $0.70 | Info   | /capacitor-code |
+| inductor calculator             | 5,500   | 35  | $0.60 | Info   | /inductor-code  |
+| SMD resistor calculator         | 4,200   | 28  | $0.80 | Info   | /smd-code       |
+| resistor color code             | 40,500  | 55  | $0.55 | Info   | /resistor-color-code |
+| free electronics tools          | 6,600   | 32  | $0.45 | Info   | /               |
+| online electronics calculator   | 3,200   | 30  | $0.85 | Info   | /               |
+| electrical calculator           | 14,800  | 45  | $1.10 | Info   | /               |
+
+TARGET PAGES FOR TIER 1:
+  Homepage title MUST contain: "electronics calculators", "free", "resistor", "LED"
+  Each calculator page MUST have its primary keyword in <h1> and first paragraph.
+
+
+================================================================================
+ TIER 2 — SECONDARY KEYWORDS (Specific Tool Variations)
+================================================================================
+Medium competition, medium volume. Use in page subheadings, content, meta descriptions.
+
+RESISTOR KEYWORDS:
+| Keyword                             | Vol    | KD  | CPC   | Intent | Page                 |
+|-------------------------------------|--------|-----|-------|--------|----------------------|
+| resistor color code calculator      | 18,000 | 40  | $0.65 | Info   | /resistor-color-code |
+| 4 band resistor calculator          | 8,100  | 35  | $0.60 | Info   | /resistor-color-code |
+| 5 band resistor calculator          | 5,400  | 33  | $0.60 | Info   | /resistor-color-code |
+| 6 band resistor calculator          | 2,900  | 30  | $0.55 | Info   | /resistor-color-code |
+| resistor value calculator           | 7,200  | 38  | $0.70 | Info   | /resistor-color-code |
+| resistor tolerance calculator       | 3,100  | 30  | $0.60 | Info   | /resistor-color-code |
+| resistor band calculator            | 4,400  | 32  | $0.58 | Info   | /resistor-color-code |
+| resistor color decoder              | 2,800  | 28  | $0.55 | Info   | /resistor-color-code |
+| resistor code calculator            | 6,000  | 35  | $0.65 | Info   | /resistor-color-code |
+| resistor value finder               | 3,300  | 29  | $0.60 | Info   | /resistor-color-code |
+| ohm resistor calculator             | 2,100  | 30  | $0.75 | Info   | /resistor-color-code |
+
+LED KEYWORDS:
+| Keyword                             | Vol    | KD  | CPC   | Intent | Page             |
+|-------------------------------------|--------|-----|-------|--------|------------------|
+| LED series resistor calculator      | 6,600  | 32  | $0.90 | Info   | /led-calculator  |
+| LED voltage calculator              | 5,400  | 33  | $0.85 | Info   | /led-calculator  |
+| LED current resistor calculator     | 3,200  | 28  | $0.88 | Info   | /led-calculator  |
+| LED resistor value calculator       | 4,100  | 30  | $0.90 | Info   | /led-calculator  |
+| LED forward voltage calculator      | 2,700  | 28  | $0.80 | Info   | /led-calculator  |
+| current limiting resistor calculator| 3,800  | 32  | $0.85 | Info   | /led-calculator  |
+| LED resistor ohm calculator         | 2,200  | 26  | $0.82 | Info   | /led-calculator  |
+| series resistor calculator          | 4,000  | 35  | $0.78 | Info   | /led-calculator  |
+
+SMD KEYWORDS:
+| Keyword                             | Vol    | KD  | CPC   | Intent | Page       |
+|-------------------------------------|--------|-----|-------|--------|------------|
+| SMD resistor code                   | 8,100  | 38  | $0.70 | Info   | /smd-code  |
+| SMD resistor code calculator        | 4,200  | 30  | $0.75 | Info   | /smd-code  |
+| EIA96 resistor                      | 1,900  | 22  | $0.65 | Info   | /smd-code  |
+| EIA-96 resistor code                | 1,600  | 20  | $0.65 | Info   | /smd-code  |
+| 3 digit SMD resistor                | 2,900  | 25  | $0.68 | Info   | /smd-code  |
+| 4 digit SMD resistor code           | 2,100  | 23  | $0.68 | Info   | /smd-code  |
+| surface mount resistor decoder      | 1,800  | 22  | $0.72 | Info   | /smd-code  |
+| SMD resistor value finder           | 1,400  | 20  | $0.70 | Info   | /smd-code  |
+| PCB resistor code                   | 1,200  | 22  | $0.75 | Info   | /smd-code  |
+
+CAPACITOR KEYWORDS:
+| Keyword                             | Vol    | KD  | CPC   | Intent | Page             |
+|-------------------------------------|--------|-----|-------|--------|------------------|
+| capacitor code calculator           | 7,200  | 38  | $0.65 | Info   | /capacitor-code  |
+| ceramic capacitor calculator        | 3,600  | 32  | $0.68 | Info   | /capacitor-code  |
+| capacitor value finder              | 2,900  | 28  | $0.62 | Info   | /capacitor-code  |
+| capacitor decoder                   | 3,100  | 30  | $0.60 | Info   | /capacitor-code  |
+| capacitor code decoder              | 2,400  | 28  | $0.62 | Info   | /capacitor-code  |
+| ceramic capacitor code 104          | 2,800  | 22  | $0.58 | Info   | /capacitor-code  |
+| capacitor pF nF uF calculator       | 1,900  | 25  | $0.60 | Info   | /capacitor-code  |
+| film capacitor calculator           | 1,600  | 22  | $0.62 | Info   | /capacitor-code  |
+| capacitor marking calculator        | 1,400  | 20  | $0.60 | Info   | /capacitor-code  |
+
+INDUCTOR KEYWORDS:
+| Keyword                             | Vol    | KD  | CPC   | Intent | Page             |
+|-------------------------------------|--------|-----|-------|--------|------------------|
+| inductor color code calculator      | 3,200  | 28  | $0.55 | Info   | /inductor-code   |
+| inductor value calculator           | 2,800  | 30  | $0.58 | Info   | /inductor-code   |
+| SMD inductor calculator             | 1,900  | 22  | $0.55 | Info   | /inductor-code   |
+| axial inductor calculator           | 1,400  | 20  | $0.52 | Info   | /inductor-code   |
+| inductor band calculator            | 1,200  | 18  | $0.50 | Info   | /inductor-code   |
+| inductor color code decoder         | 1,600  | 20  | $0.52 | Info   | /inductor-code   |
+| uH mH inductor calculator           | 900    | 16  | $0.50 | Info   | /inductor-code   |
+| inductor value finder               | 800    | 15  | $0.48 | Info   | /inductor-code   |
+
+
+================================================================================
+ TIER 3 — LONG-TAIL KEYWORDS (Low Competition, High Intent)
+================================================================================
+These are GOLDMINE keywords for a new site. Lower search volume but much
+easier to rank for. Users searching these are highly specific and likely to
+convert into engaged visitors.
+
+RESISTOR LONG-TAILS:
+  "how to read resistor color code"             Vol: 5,400  KD: 25  Intent: Info
+  "resistor color code 4 band calculator online" Vol: 2,900  KD: 20  Intent: Info
+  "what resistor do i need for LED"              Vol: 4,400  KD: 22  Intent: Info
+  "how to calculate resistor value for LED"      Vol: 6,600  KD: 24  Intent: Info
+  "4 band resistor brown black red gold"         Vol: 2,200  KD: 15  Intent: Info
+  "resistor color code chart online"             Vol: 9,900  KD: 35  Intent: Info
+  "find resistor value from color bands"         Vol: 1,800  KD: 18  Intent: Info
+  "resistor calculator online free"              Vol: 3,600  KD: 25  Intent: Info
+  "how to decode resistor markings"              Vol: 1,600  KD: 15  Intent: Info
+  "resistor ohm value calculator"                Vol: 2,100  KD: 20  Intent: Info
+  "5 band resistor color code calculator online" Vol: 2,400  KD: 18  Intent: Info
+  "precision resistor color code"                Vol: 1,400  KD: 16  Intent: Info
+  "resistor color code brown black orange gold"  Vol: 1,200  KD: 12  Intent: Info
+
+LED LONG-TAILS:
+  "LED resistor calculator 5V"                   Vol: 3,200  KD: 18  Intent: Info
+  "LED resistor calculator 12V"                  Vol: 4,100  KD: 20  Intent: Info
+  "LED resistor calculator 3.3V"                 Vol: 2,100  KD: 16  Intent: Info
+  "what resistor for LED Arduino"                Vol: 5,400  KD: 22  Intent: Info
+  "LED resistor calculator Arduino"              Vol: 3,600  KD: 18  Intent: Info
+  "how to calculate LED series resistor"         Vol: 4,800  KD: 20  Intent: Info
+  "LED resistor formula"                         Vol: 3,200  KD: 18  Intent: Info
+  "LED current limiting resistor calculator"     Vol: 2,800  KD: 20  Intent: Info
+  "forward voltage red LED resistor"             Vol: 1,800  KD: 14  Intent: Info
+  "white LED resistor calculator"                Vol: 2,200  KD: 16  Intent: Info
+  "blue LED resistor calculator"                 Vol: 1,900  KD: 15  Intent: Info
+  "5mm LED resistor 9V"                          Vol: 1,600  KD: 12  Intent: Info
+  "LED resistor power dissipation calculator"    Vol: 1,200  KD: 14  Intent: Info
+
+SMD LONG-TAILS:
+  "how to read SMD resistor code"                Vol: 3,600  KD: 20  Intent: Info
+  "SMD resistor code 103 meaning"                Vol: 2,900  KD: 15  Intent: Info
+  "EIA-96 resistor code lookup"                  Vol: 1,800  KD: 16  Intent: Info
+  "decode surface mount resistor marking"         Vol: 2,100  KD: 16  Intent: Info
+  "0402 resistor code calculator"                Vol: 1,400  KD: 14  Intent: Info
+  "0603 SMD resistor value calculator"           Vol: 1,600  KD: 14  Intent: Info
+  "0805 SMD resistor calculator"                 Vol: 1,400  KD: 14  Intent: Info
+  "what does 103 mean on SMD resistor"           Vol: 2,200  KD: 12  Intent: Info
+  "SMD resistor 4R7 value"                       Vol: 1,200  KD: 10  Intent: Info
+
+CAPACITOR LONG-TAILS:
+  "ceramic capacitor 104 value in nF"            Vol: 3,600  KD: 15  Intent: Info
+  "how to read capacitor code"                   Vol: 5,400  KD: 22  Intent: Info
+  "capacitor code 104 meaning"                   Vol: 2,900  KD: 16  Intent: Info
+  "capacitor marking 473 value"                  Vol: 1,800  KD: 12  Intent: Info
+  "ceramic capacitor value calculator"           Vol: 2,400  KD: 18  Intent: Info
+  "capacitor pF to nF conversion"                Vol: 3,200  KD: 20  Intent: Info
+  "how to read ceramic capacitor"                Vol: 4,100  KD: 20  Intent: Info
+  "capacitor code decoder online"                Vol: 2,100  KD: 16  Intent: Info
+
+INDUCTOR LONG-TAILS:
+  "how to read inductor color code"              Vol: 2,200  KD: 16  Intent: Info
+  "inductor color code calculator online"         Vol: 1,900  KD: 14  Intent: Info
+  "axial inductor value from color bands"         Vol: 1,400  KD: 12  Intent: Info
+  "SMD inductor marking decoder"                 Vol: 1,200  KD: 12  Intent: Info
+  "inductor 4 band color code"                   Vol: 1,600  KD: 14  Intent: Info
+  "microhenry inductor value calculator"          Vol: 900    KD: 10  Intent: Info
+
+
+================================================================================
+ TIER 4 — ENGINEERING / EDUCATIONAL KEYWORDS
+================================================================================
+Informational search intent. Use on About page, blog articles, and educational
+content sections within calculator pages. These keywords attract students and
+professionals who may become loyal users.
+
+ENGINEERING / OHM'S LAW KEYWORDS:
+  "ohm's law calculator"                         Vol: 33,100 KD: 45  Intent: Info
+  "ohms law formula"                             Vol: 18,000 KD: 40  Intent: Info
+  "voltage divider calculator"                   Vol: 22,000 KD: 42  Intent: Info
+  "kirchhoff's voltage law calculator"           Vol: 4,400  KD: 38  Intent: Info
+  "power dissipation calculator"                 Vol: 6,600  KD: 35  Intent: Info
+  "electrical resistance calculator"             Vol: 8,100  KD: 40  Intent: Info
+  "electronics for beginners"                    Vol: 12,100 KD: 48  Intent: Info
+  "electronics engineering tools online"         Vol: 3,200  KD: 30  Intent: Info
+  "engineering calculator free online"           Vol: 5,400  KD: 40  Intent: Info
+  "PCB design tools"                             Vol: 6,600  KD: 50  Intent: Info
+  "electronics component reference guide"        Vol: 1,900  KD: 25  Intent: Info
+  "passive components calculator"                Vol: 2,200  KD: 28  Intent: Info
+  "electronics hobbyist tools"                   Vol: 1,600  KD: 22  Intent: Info
+
+ARDUINO / MAKER KEYWORDS (high traffic, excellent for blog content):
+  "Arduino resistor calculator"                  Vol: 9,900  KD: 28  Intent: Info
+  "Arduino LED wiring"                           Vol: 14,800 KD: 35  Intent: Info
+  "Arduino circuit calculator"                   Vol: 5,400  KD: 30  Intent: Info
+  "Raspberry Pi resistor"                        Vol: 4,400  KD: 28  Intent: Info
+  "electronics beginner guide"                   Vol: 8,100  KD: 35  Intent: Info
+  "breadboard circuit calculator"                Vol: 2,900  KD: 25  Intent: Info
+  "electronics component identifier"             Vol: 3,600  KD: 28  Intent: Info
+
+STUDENT KEYWORDS:
+  "electronics calculator for students"          Vol: 2,900  KD: 22  Intent: Info
+  "electronics formulas calculator"              Vol: 3,200  KD: 28  Intent: Info
+  "free engineering calculator online"           Vol: 4,100  KD: 32  Intent: Info
+  "electrical engineering calculator free"       Vol: 5,400  KD: 38  Intent: Info
+  "electronics lab calculator"                   Vol: 1,800  KD: 20  Intent: Info
+  "passive component calculator"                 Vol: 2,100  KD: 22  Intent: Info
+
+
+================================================================================
+ TIER 5 — HIGH CPC COMMERCIAL KEYWORDS
+================================================================================
+These keywords have high commercial intent and high CPC. They attract visitors
+who are purchasing components or professional engineers. High AdSense CPC.
+When these users click ads after using your calculators, you earn more.
+
+| Keyword                               | Vol    | CPC   | KD  | Notes                  |
+|---------------------------------------|--------|-------|-----|------------------------|
+| buy resistors online                  | 6,600  | $1.80 | 60  | Commercial             |
+| electronic components online          | 14,800 | $1.50 | 65  | Commercial             |
+| resistor kit electronics              | 3,600  | $2.10 | 55  | Commercial             |
+| LED kit with resistors                | 2,200  | $1.90 | 50  | Commercial             |
+| precision resistor 1% tolerance       | 2,900  | $2.20 | 48  | Commercial             |
+| SMD resistor kit assortment           | 4,400  | $2.40 | 52  | Commercial             |
+| electronic component calculator app   | 3,200  | $1.20 | 35  | High CPC Informational |
+| best electronics calculator online    | 2,100  | $1.10 | 30  | High CPC Informational |
+| electronics tools website             | 1,900  | $1.00 | 28  | High CPC Informational |
+
+STRATEGY FOR HIGH CPC KEYWORDS:
+  Add Amazon Associates links after calculation results:
+    "Buy the [value]Ω resistors you need on Amazon →"
+  This doubles your monetization: AdSense + affiliate commissions.
+
+
+================================================================================
+ TIER 6 — BRAND KEYWORDS
+================================================================================
+These build brand recognition and defend your brand from competitors.
+
+  "poolcalculator"                               Vol: 200+  KD: 5   Brand Nav
+  "poolcalc electronics"                         Vol: 100+  KD: 5   Brand Nav
+  "electropool calculator"                       Vol: 100+  KD: 5   Brand Nav
+  "poolcalculator electronics tools"             Vol: 100+  KD: 5   Brand Nav
+  "electropool.online"                           Vol: 50+   KD: 5   Brand Nav
+  "poolcalc resistor"                            Vol: 50+   KD: 5   Brand Nav
+
+BRAND KEYWORD STRATEGY:
+  1. Ensure homepage H1 mentions "PoolCalculator" or "PoolCalc"
+  2. Include brand name in all title tags as suffix
+  3. Register brand on social media: @poolcalc on Twitter, Reddit
+  4. Add structured Organization schema with brand name
+
+
+================================================================================
+ KEYWORD MAPPING — WHICH KEYWORDS GO ON WHICH PAGE
+================================================================================
+
+PAGE: Homepage (/)
+  Primary:    electronics calculator, free electronics tools, online electronics calculator
+  Secondary:  resistor calculator, LED calculator, capacitor calculator, inductor calculator
+  Long-tail:  "free online electronics calculators", "electronics tools for students"
+  Title:      "Free Electronics Calculators – Resistor, LED, Capacitor & More | PoolCalc"
+  Description uses: "free", "electronics calculators", "engineers", "students", "instant"
+
+PAGE: /resistor-color-code
+  Primary:    resistor calculator, resistor color code, resistor color code calculator
+  Secondary:  4 band resistor, 5 band resistor, 6 band resistor, resistor value calculator
+  Long-tail:  "how to read resistor color code", "4 band resistor calculator online"
+  Title:      "Resistor Color Code Calculator – 4, 5 & 6 Band | PoolCalc"
+
+PAGE: /led-calculator
+  Primary:    LED resistor calculator, LED series resistor calculator
+  Secondary:  LED voltage calculator, forward voltage calculator, current limiting resistor
+  Long-tail:  "LED resistor calculator Arduino", "what resistor for LED 5V"
+  Title:      "LED Resistor Calculator – Find Series Resistor Value | PoolCalc"
+
+PAGE: /smd-code
+  Primary:    SMD resistor calculator, SMD resistor code calculator
+  Secondary:  EIA96 resistor, EIA-96 code, surface mount resistor decoder
+  Long-tail:  "how to read SMD resistor code", "decode SMD resistor marking"
+  Title:      "SMD Resistor Code Calculator – 3-Digit, 4-Digit & EIA-96 | PoolCalc"
+
+PAGE: /capacitor-code
+  Primary:    capacitor calculator, capacitor code calculator, ceramic capacitor calculator
+  Secondary:  capacitor value finder, capacitor decoder, film capacitor
+  Long-tail:  "ceramic capacitor 104 value", "how to read capacitor code"
+  Title:      "Capacitor Code Calculator – Ceramic, Film & SMD | PoolCalc"
+
+PAGE: /inductor-code
+  Primary:    inductor calculator, inductor color code calculator
+  Secondary:  SMD inductor calculator, axial inductor, inductor value calculator
+  Long-tail:  "how to read inductor color code", "inductor microhenry calculator"
+  Title:      "Inductor Color Code Calculator – Axial & SMD | PoolCalc"
+
+
+================================================================================
+ KEYWORD PRIORITY MATRIX — WHERE TO START
+================================================================================
+
+QUICK WINS (Low KD, Decent Volume — rank within 2-3 months):
+  - SMD resistor code calculator      (KD: 30, Vol: 4,200)
+  - SMD resistor code                 (KD: 38, Vol: 8,100)
+  - capacitor code calculator         (KD: 38, Vol: 7,200)
+  - ceramic capacitor 104 value in nF (KD: 15, Vol: 3,600)
+  - how to read SMD resistor code     (KD: 20, Vol: 3,600)
+  - LED resistor calculator 12V       (KD: 20, Vol: 4,100)
+  - EIA-96 resistor code              (KD: 20, Vol: 1,600)
+  - what does 103 mean on SMD         (KD: 12, Vol: 2,200)
+
+MEDIUM-TERM TARGETS (3-6 months with link building):
+  - LED resistor calculator           (KD: 35, Vol: 12,000)
+  - 4 band resistor calculator        (KD: 35, Vol: 8,100)
+  - capacitor decoder                 (KD: 30, Vol: 3,100)
+  - inductor color code calculator    (KD: 28, Vol: 3,200)
+
+LONG-TERM AUTHORITY KEYWORDS (6+ months):
+  - resistor color code               (KD: 55, Vol: 40,500)
+  - electronics calculator            (KD: 42, Vol: 18,000)
+  - resistor calculator               (KD: 38, Vol: 22,000)
+
+================================================================================
+END OF SEO_KEYWORDS_MASTER.txt
+================================================================================

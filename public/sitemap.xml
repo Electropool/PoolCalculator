@@ -3,51 +3,85 @@
   <url>
     <loc>https://poolcalculator.electropool.online/</loc>
     <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/resistor-color-code</loc>
     <lastmod>2026-05-15</lastmod>
-    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/led-calculator</loc>
     <lastmod>2026-05-15</lastmod>
-    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/smd-code</loc>
     <lastmod>2026-05-15</lastmod>
-    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/capacitor-code</loc>
     <lastmod>2026-05-15</lastmod>
-    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/inductor-code</loc>
     <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://poolcalculator.electropool.online/blog</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://poolcalculator.electropool.online/blog/how-to-read-resistor-color-codes</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://poolcalculator.electropool.online/blog/what-resistor-for-led</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://poolcalculator.electropool.online/blog/eia-96-smd-resistor-code-guide</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/about</loc>
     <lastmod>2026-05-15</lastmod>
-    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/contact</loc>
     <lastmod>2026-05-15</lastmod>
-    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/privacy-policy</loc>
     <lastmod>2026-05-15</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://poolcalculator.electropool.online/terms</loc>
     <lastmod>2026-05-15</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 </urlset>

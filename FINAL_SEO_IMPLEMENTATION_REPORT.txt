@@ -1,0 +1,916 @@
+
+================================================================================
+  FINAL_SEO_IMPLEMENTATION_REPORT.txt
+  Website: https://poolcalculator.electropool.online/
+  Purpose: Actionable code-level SEO implementation guide.
+           All changes preserve existing design, routing, and calculator logic.
+  Date: May 2026
+================================================================================
+
+This report provides exact code changes to implement in the PoolCalculator
+React project to achieve maximum Google ranking potential. Every change is
+surgical — no architecture rewrites, no breaking changes.
+
+Changes are organized by impact priority (highest first).
+
+
+================================================================================
+ CHANGE #1 — IMPLEMENT REACT-SNAP PRERENDERING
+ Priority: CRITICAL | Impact: Transforms SPA to static HTML for all routes
+================================================================================
+
+WHY: Without prerendering, Googlebot receives an empty HTML shell. With
+prerendering, each route gets its own static HTML file with full content,
+correct title, description, and structured data — readable without JavaScript.
+
+--- package.json CHANGE ---
+
+CURRENT:
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
+  }
+
+REPLACE WITH:
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "postbuild": "react-snap",
+    "test": "react-scripts test"
+  },
+  "reactSnap": {
+    "source": "build",
+    "destination": "build",
+    "include": [
+      "/",
+      "/led-calculator",
+      "/resistor-color-code",
+      "/smd-code",
+      "/capacitor-code",
+      "/inductor-code",
+      "/about",
+      "/contact",
+      "/privacy-policy",
+      "/terms"
+    ],
+    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
+    "skipThirdPartyRequests": true,
+    "inlineCss": false,
+    "saveAs": "html"
+  }
+
+INSTALL:
+  npm install --save-dev react-snap
+
+--- src/index.js CHANGE ---
+
+CURRENT:
+  import React from 'react';
+  import ReactDOM from 'react-dom/client';
+  import App from './App';
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<React.StrictMode><App /></React.StrictMode>);
+
+REPLACE WITH:
+  import React from 'react';
+  import { hydrateRoot, createRoot } from 'react-dom/client';
+  import App from './App';
+
+  const rootElement = document.getElementById('root');
+
+  if (rootElement.hasChildNodes()) {
+    // react-snap pre-rendered HTML exists — hydrate it
+    hydrateRoot(
+      rootElement,
+      <React.StrictMode><App /></React.StrictMode>
+    );
+  } else {
+    // No pre-rendered HTML — render normally (dev mode)
+    createRoot(rootElement).render(
+      <React.StrictMode><App /></React.StrictMode>
+    );
+  }
+
+RESULT: Running `npm run build` now:
+  1. Compiles the React app (npm run build)
+  2. Launches headless Chrome (react-snap postbuild)
+  3. Visits each route in the list
+  4. Saves the fully-rendered HTML as static files
+  5. Each route has its own HTML file with correct SEO metadata
+
+
+================================================================================
+ CHANGE #2 — UPDATE HOMEPAGE TITLE & DESCRIPTION FOR TARGET KEYWORDS
+ Priority: HIGH | Impact: Better SERP appearance, keyword relevance signals
+================================================================================
+
+FILE: src/pages/Home.jsx
+
+CURRENT SEOHead call:
+  <SEOHead
+    title="PoolCalculator – Fast & Simple Electronics Calculators"
+    description="Free online electronics tools for students, hobbyists, and engineers. Resistor color codes, LED calculators, Ohm's law, and more."
+    keywords="electronics calculator, resistor calculator, led resistor calculator, ohms law, voltage divider, smd code"
+    canonical="/"
+  />
+
+REPLACE WITH:
+  <SEOHead
+    title="Free Electronics Calculators – Resistor, LED, Capacitor & Inductor | PoolCalc"
+    description="Free online electronics calculators for students and engineers. Resistor color codes, LED resistor values, SMD codes, capacitor decoders. Instant results, no signup."
+    keywords="electronics calculator, free electronics tools, resistor calculator, LED resistor calculator, capacitor calculator, inductor calculator, SMD resistor code, electronics engineering tools, online electronics calculator"
+    canonical="/"
+    schema={{
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "PoolCalculator",
+          "alternateName": "PoolCalc",
+          "url": "https://poolcalculator.electropool.online",
+          "description": "Free online electronics calculators for resistors, LEDs, capacitors, and inductors.",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://poolcalculator.electropool.online/resistor-color-code?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "name": "PoolCalculator",
+          "url": "https://poolcalculator.electropool.online",
+          "logo": "https://poolcalculator.electropool.online/android-chrome-512x512.png",
+          "sameAs": ["https://discord.gg/QbCcpKCZPF"],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "arpankar077@gmail.com"
+          }
+        },
+        {
+          "@type": "ItemList",
+          "name": "Free Electronics Calculators",
+          "description": "A complete collection of free online electronics calculators",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Resistor Color Code Calculator", "url": "https://poolcalculator.electropool.online/resistor-color-code"},
+            {"@type": "ListItem", "position": 2, "name": "LED Resistor Calculator", "url": "https://poolcalculator.electropool.online/led-calculator"},
+            {"@type": "ListItem", "position": 3, "name": "SMD Resistor Code Calculator", "url": "https://poolcalculator.electropool.online/smd-code"},
+            {"@type": "ListItem", "position": 4, "name": "Capacitor Code Calculator", "url": "https://poolcalculator.electropool.online/capacitor-code"},
+            {"@type": "ListItem", "position": 5, "name": "Inductor Color Code Calculator", "url": "https://poolcalculator.electropool.online/inductor-code"}
+          ]
+        }
+      ]
+    }}
+  />
+
+
+================================================================================
+ CHANGE #3 — ADD SEO CONTENT SECTION TO HOMEPAGE
+ Priority: HIGH | Impact: Homepage has 150 indexed words → 600+ words
+================================================================================
+
+FILE: src/pages/Home.jsx
+
+ADD this section AFTER the why-section and BEFORE the AdSlot:
+
+  <section className="seo-content-section" style={{
+    padding: '60px 0',
+    borderTop: '1px solid var(--border-subtle)'
+  }}>
+    <h2 style={{fontSize:'28px',fontWeight:'800',marginBottom:'16px',color:'var(--text-primary)'}}>
+      Free Electronics Calculators for Engineers & Students
+    </h2>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'20px',fontSize:'15px'}}>
+      PoolCalculator provides a complete suite of free online electronics calculators designed
+      for hobbyists, students, and professional electrical engineers. Whether you need to decode
+      a resistor color code, calculate the correct series resistor for an LED circuit, decode
+      surface-mount (SMD) component markings, or identify capacitor and inductor values — our
+      tools deliver instant, accurate results without any registration or downloads.
+    </p>
+    <h3 style={{fontSize:'20px',fontWeight:'700',marginBottom:'12px',color:'var(--text-primary)'}}>
+      What Can You Calculate?
+    </h3>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'20px',fontSize:'15px'}}>
+      Our <Link to="/resistor-color-code" style={{color:'var(--accent)'}}>Resistor Color Code Calculator</Link> supports
+      4-band, 5-band, and 6-band resistors including temperature coefficient decoding. The
+      bidirectional mode lets you input a resistance value and instantly see the corresponding
+      color bands — perfect for students learning electronics fundamentals.
+    </p>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'20px',fontSize:'15px'}}>
+      Our <Link to="/led-calculator" style={{color:'var(--accent)'}}>LED Resistor Calculator</Link> calculates
+      the exact series resistor needed to safely drive any LED from any supply voltage (3.3V,
+      5V, 9V, 12V). It automatically suggests the nearest E24 standard resistor value and
+      calculates power dissipation, helping you choose the right wattage rating.
+    </p>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'20px',fontSize:'15px'}}>
+      The <Link to="/smd-code" style={{color:'var(--accent)'}}>SMD Resistor Code Calculator</Link> decodes
+      all surface-mount resistor markings including 3-digit codes, 4-digit codes, EIA-96 codes
+      (01A format), and R-notation values (4R7 = 4.7Ω). Essential for PCB repair and component
+      identification.
+    </p>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'20px',fontSize:'15px'}}>
+      Identify capacitor values with our <Link to="/capacitor-code" style={{color:'var(--accent)'}}>Capacitor Code Calculator</Link>,
+      which converts 3-digit ceramic capacitor codes to picofarads, nanofarads, and microfarads.
+      The <Link to="/inductor-code" style={{color:'var(--accent)'}}>Inductor Calculator</Link> handles
+      both axial (color-coded) and SMD inductors, giving results in µH, mH, or H.
+    </p>
+    <h3 style={{fontSize:'20px',fontWeight:'700',marginBottom:'12px',color:'var(--text-primary)'}}>
+      Why Use PoolCalculator?
+    </h3>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',fontSize:'15px'}}>
+      Unlike complex simulation software, PoolCalculator focuses on giving you the specific
+      answer you need in seconds. All calculations run locally in your browser — no data is
+      sent to any server, and no account is required. The site works on mobile, tablet, and
+      desktop, making it the ideal companion for bench work, lectures, and exam preparation.
+      Used by electronics students, Arduino hobbyists, PCB designers, and professional
+      electrical engineers worldwide.
+    </p>
+  </section>
+
+
+================================================================================
+ CHANGE #4 — FIX HEADING HIERARCHY (Replace section-title divs with h2)
+ Priority: HIGH | Impact: Proper semantic HTML structure for Googlebot
+================================================================================
+
+On each calculator page, the "section-title" divs that are major section
+headings should be converted to <h2> elements. Apply these changes:
+
+FILE: src/pages/LEDCalculator.jsx
+FILE: src/pages/ResistorColorCode.jsx
+FILE: src/pages/SMDCode.jsx
+FILE: src/pages/CapacitorCode.jsx
+FILE: src/pages/InductorCode.jsx
+
+PATTERN TO FIND AND REPLACE IN EACH FILE:
+
+For major section headings (one per major content block):
+  CURRENT:  <div className="section-title">How to Calculate LED Resistors</div>
+  REPLACE:  <h2 className="section-title">How to Calculate LED Resistors</h2>
+
+  CURRENT:  <div className="section-title">Reading SMD Resistor Codes</div>
+  REPLACE:  <h2 className="section-title">Reading SMD Resistor Codes</h2>
+
+  CURRENT:  <div className="section-title">Capacitor Identification Guide</div>
+  REPLACE:  <h2 className="section-title">Capacitor Identification Guide</h2>
+
+  CURRENT:  <div className="section-title">Inductor Identification Guide</div>
+  REPLACE:  <h2 className="section-title">Inductor Identification Guide</h2>
+
+  CURRENT:  <div className="section-title">Understanding Resistor Color Codes</div>
+  REPLACE:  <h2 className="section-title">Understanding Resistor Color Codes</h2>
+
+For interactive UI labels (NOT page section headings — keep as div):
+  "Circuit Parameters", "Results", "Enter SMD Code", "Change Mode"
+  These should REMAIN as <div className="section-title"> since they are UI
+  labels, not content section headings.
+
+CSS NOTE: The .section-title class uses display: flex and other block-level
+properties. Adding these to an <h2> element works without any CSS changes.
+Test visually after making these changes.
+
+
+================================================================================
+ CHANGE #5 — UPGRADE SITEMAP.XML WITH CHANGEFREQ
+ Priority: HIGH | Impact: Better crawl scheduling signals to Google
+================================================================================
+
+FILE: public/sitemap.xml
+
+REPLACE ENTIRE FILE WITH:
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+      <loc>https://poolcalculator.electropool.online/</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/resistor-color-code</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/led-calculator</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/smd-code</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/capacitor-code</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/inductor-code</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/about</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.4</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/contact</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.4</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/privacy-policy</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.3</priority>
+    </url>
+    <url>
+      <loc>https://poolcalculator.electropool.online/terms</loc>
+      <lastmod>2026-05-15</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.3</priority>
+    </url>
+  </urlset>
+
+
+================================================================================
+ CHANGE #6 — ADD RICH CONTENT TO SMD PAGE (THIN CONTENT FIX)
+ Priority: HIGH | Impact: SMD page goes from 220 → 700+ indexed words
+================================================================================
+
+FILE: src/pages/SMDCode.jsx
+
+FIND the description-section card and REPLACE the description-text content:
+
+REPLACE the div with className="description-text" content with:
+
+  <div className="description-text">
+    <h2 className="section-title">Reading SMD Resistor Codes</h2>
+    <p>Surface Mount Device (SMD) resistors are small rectangular components used
+    on modern printed circuit boards (PCBs). Because they are too tiny to have
+    their value printed in full, they use compact numeric and alphanumeric codes
+    to indicate their resistance value. This SMD resistor code calculator decodes
+    all three standard marking systems used worldwide.</p>
+
+    <h3 style={{fontSize:'18px',fontWeight:'700',margin:'20px 0 10px',color:'var(--text-primary)'}}>
+      3-Digit Code System
+    </h3>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'16px'}}>
+      The 3-digit code is the most common SMD resistor marking. The first two digits
+      represent significant figures, and the third digit is the multiplier (the power
+      of ten). For example, <strong>103</strong> = 10 × 10³ = 10,000Ω (10kΩ). The
+      code <strong>470</strong> = 47 × 10⁰ = 47Ω. Common SMD packages using 3-digit
+      codes include 0402, 0603, 0805, and 1206.
+    </p>
+
+    <div className="formula-box">
+      <h3>3-Digit Formula</h3>
+      <code>R = (Digit1 Digit2) × 10^Digit3</code>
+      <p style={{marginTop:'8px',fontSize:'14px'}}>Example: 103 = 10 × 10³ = 10kΩ</p>
+    </div>
+
+    <h3 style={{fontSize:'18px',fontWeight:'700',margin:'20px 0 10px',color:'var(--text-primary)'}}>
+      4-Digit Code System (High Precision)
+    </h3>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'16px'}}>
+      The 4-digit code provides higher precision. The first three digits are significant
+      figures, and the fourth is the multiplier. For example, <strong>4702</strong> = 470 × 10² = 47,000Ω (47kΩ).
+      The code <strong>1001</strong> = 100 × 10¹ = 1,000Ω (1kΩ). These are typically found on 1%
+      tolerance resistors in 0603 and larger packages.
+    </p>
+
+    <h3 style={{fontSize:'18px',fontWeight:'700',margin:'20px 0 10px',color:'var(--text-primary)'}}>
+      EIA-96 Code System (1% Precision Resistors)
+    </h3>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'16px'}}>
+      The EIA-96 system is used for precision 1% resistors and provides 96 unique base
+      values per decade. The first two digits are a lookup code (01-96) into the EIA-96
+      table, and the letter represents the multiplier. For example, <strong>01C</strong>
+      = EIA-96 value 100 × multiplier C (100) = 10,000Ω. Letters: Z=0.001, Y=0.01,
+      X=0.1, A=1, B=10, C=100, D=1000, E=10000, F=100000.
+    </p>
+
+    <div className="example-box">
+      <h3>EIA-96 Example</h3>
+      <code>01C: Code 01 = 100Ω base, Letter C = ×100 → 10,000Ω (10kΩ)</code>
+    </div>
+
+    <h2 style={{fontSize:'22px',fontWeight:'800',margin:'32px 0 16px',color:'var(--text-primary)'}}>
+      Frequently Asked Questions
+    </h2>
+
+    <div className="faq-item" style={{marginBottom:'20px'}}>
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        What does "R" notation mean on an SMD resistor?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        When the marking contains "R", it represents a decimal point. So <strong>4R7</strong> = 4.7Ω,
+        <strong>R47</strong> = 0.47Ω, and <strong>1R0</strong> = 1.0Ω. This notation is used for
+        low-value resistors where a decimal would be difficult to print clearly.
+      </p>
+    </div>
+
+    <div className="faq-item" style={{marginBottom:'20px'}}>
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        What does "000" or "0" mean on an SMD component?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        A marking of "0", "000", or "0000" indicates a <strong>jumper resistor</strong> —
+        a zero-ohm resistor used to create a short circuit or bridge connection on a PCB.
+        They are commonly used in PCB layout to allow routing traces that would otherwise
+        need to cross, or to allow configuration options by populating/depopulating them.
+      </p>
+    </div>
+
+    <div className="faq-item" style={{marginBottom:'20px'}}>
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        How do I identify SMD resistor size (0402, 0603, 0805)?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        SMD package codes refer to physical dimensions in hundredths of an inch. 0402 = 0.04" × 0.02" (1.0mm × 0.5mm).
+        0603 = 0.06" × 0.03" (1.6mm × 0.8mm). 0805 = 0.08" × 0.05" (2.0mm × 1.25mm).
+        Larger packages (0805, 1206) can carry more power. Smaller packages (0402, 0201)
+        require precision soldering or reflow equipment.
+      </p>
+    </div>
+
+    <div className="faq-item">
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        Can I use this calculator for SMD capacitors and inductors?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        This calculator is specifically for SMD resistors. For capacitors, use our
+        dedicated <a href="/capacitor-code" style={{color:'var(--accent)'}}>Capacitor Code Calculator</a>.
+        For SMD inductors, use our <a href="/inductor-code" style={{color:'var(--accent)'}}>Inductor Calculator</a>
+        which supports SMD inductor markings using the same 3-digit and R-notation system.
+      </p>
+    </div>
+  </div>
+
+ALSO UPDATE the SMDCode schema to include FAQPage:
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SMD Resistor Code Calculator",
+    "url": "https://poolcalculator.electropool.online/smd-code",
+    "description": "Decode SMD resistor codes: 3-digit, 4-digit, EIA-96, and R-notation. Instant resistance value lookup for surface-mount resistors.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does R notation mean on an SMD resistor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When the marking contains R, it represents a decimal point. So 4R7 = 4.7Ω, R47 = 0.47Ω, and 1R0 = 1.0Ω. This notation is used for low-value resistors where a decimal would be difficult to print clearly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does 000 mean on an SMD component?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A marking of 0, 000, or 0000 indicates a jumper resistor — a zero-ohm component used to create a short circuit or bridge connection on a PCB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I decode an EIA-96 SMD resistor code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "EIA-96 codes use 2 digits followed by a letter. The digits (01-96) reference a lookup table of 96 base values, and the letter is the multiplier. For example, 01C means base value 100 × multiplier C (100) = 10kΩ."
+          }
+        }
+      ]
+    }
+  };
+
+ALSO UPDATE SEOHead call for SMD page:
+  <SEOHead
+    title="SMD Resistor Code Calculator – 3-Digit, 4-Digit & EIA-96 Decoder | PoolCalc"
+    description="Decode any SMD resistor code instantly. Supports 3-digit, 4-digit, EIA-96 (01C format), and R-notation (4R7). Free online surface-mount resistor value finder."
+    keywords="SMD resistor code calculator, SMD resistor decoder, EIA-96 resistor code, 3 digit SMD resistor, 4 digit SMD resistor, surface mount resistor value, PCB resistor code"
+    canonical="/smd-code"
+    schema={schema}
+  />
+
+
+================================================================================
+ CHANGE #7 — ADD RICH CONTENT TO CAPACITOR PAGE
+ Priority: HIGH | Impact: Capacitor page grows from 290 → 700+ indexed words
+================================================================================
+
+FILE: src/pages/CapacitorCode.jsx
+
+REPLACE the description-text div content with:
+
+  <div className="description-text">
+    <h2 className="section-title">Capacitor Identification Guide</h2>
+    <p>Capacitors store and release electrical energy and are one of the most
+    common components in electronics. Unlike resistors, which have color bands,
+    most capacitors use a compact 3-digit code to encode their capacitance value
+    in picofarads (pF). This capacitor code calculator instantly converts any
+    capacitor marking to its value in pF, nF, and µF.</p>
+
+    <div className="formula-box">
+      <h3>The 3-Digit Code Formula</h3>
+      <code>Value (pF) = XY × 10^Z</code>
+      <p style={{marginTop:'8px',fontSize:'14px'}}>X and Y are significant digits, Z is the multiplier exponent.</p>
+    </div>
+
+    <h3 style={{fontSize:'18px',fontWeight:'700',margin:'20px 0 10px',color:'var(--text-primary)'}}>
+      Most Common Capacitor Codes
+    </h3>
+    <p style={{color:'var(--text-secondary)',lineHeight:'1.8',marginBottom:'16px'}}>
+      The most frequently encountered ceramic capacitor codes: <strong>104</strong> = 100nF (the
+      standard 100nF bypass capacitor found on almost every IC). <strong>103</strong> = 10nF.
+      <strong>473</strong> = 47nF. <strong>102</strong> = 1nF. <strong>472</strong> = 4.7nF.
+      <strong>101</strong> = 100pF. These values are the workhorses of digital electronics design.
+    </p>
+
+    <div className="example-box">
+      <h3>Common Types</h3>
+      <p><strong>Ceramic (disc/MLCC):</strong> Most common, low cost, disc or rectangular SMD shapes.
+      Code: 104 = 100nF. Used for bypass/decoupling in every digital circuit.</p>
+      <p><strong>Film (polyester/polypropylene):</strong> Better stability than ceramic.
+      Box-shaped, yellow or orange. Code: 222 = 2.2nF. Used in audio and timing circuits.</p>
+      <p><strong>Electrolytic:</strong> Large values (µF to mF), polarized. Usually marked directly
+      with value and voltage. Not decoded with this calculator.</p>
+    </div>
+
+    <h2 style={{fontSize:'22px',fontWeight:'800',margin:'32px 0 16px',color:'var(--text-primary)'}}>
+      Frequently Asked Questions
+    </h2>
+
+    <div className="faq-item" style={{marginBottom:'20px'}}>
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        What does 104 mean on a capacitor?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        The code 104 means 10 × 10⁴ picofarads = 100,000pF = 100nF = 0.1µF. This is the
+        most common bypass capacitor value in digital electronics. You will find a 100nF
+        ceramic capacitor on almost every integrated circuit's VCC and GND pins to filter
+        power supply noise.
+      </p>
+    </div>
+
+    <div className="faq-item" style={{marginBottom:'20px'}}>
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        How do I convert pF, nF, and µF?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        The unit conversions: 1µF = 1,000nF = 1,000,000pF. 1nF = 1,000pF.
+        So 100nF = 0.1µF = 100,000pF. The capacitor code calculator automatically
+        shows all three units so you don't need to memorize the conversions.
+      </p>
+    </div>
+
+    <div className="faq-item" style={{marginBottom:'20px'}}>
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        What do the tolerance letters mean (J, K, M)?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        A letter suffix on the capacitor code indicates tolerance. J = ±5%, K = ±10%,
+        M = ±20%, F = ±1%, G = ±2%. For example, 104K is a 100nF capacitor with ±10%
+        tolerance. For most decoupling applications, ±10% or ±20% is perfectly acceptable.
+        Precision timing circuits may require ±5% or better.
+      </p>
+    </div>
+
+    <div className="faq-item">
+      <h3 style={{fontSize:'16px',color:'var(--accent)',marginBottom:'8px'}}>
+        What is an SMD capacitor code?
+      </h3>
+      <p style={{color:'var(--text-secondary)',lineHeight:'1.8'}}>
+        SMD capacitors (MLCC) often use the same 3-digit code as through-hole ceramics, but
+        very small packages (0402, 0201) may have no marking at all. Larger SMD capacitors
+        may use a letter + number code (e.g., "A7" or "C3"). When in doubt, check the
+        reel label or PCB BOM for the exact component value.
+      </p>
+    </div>
+  </div>
+
+ALSO UPDATE SEOHead for capacitor page:
+  <SEOHead
+    title="Capacitor Code Calculator – Decode Ceramic, Film & SMD Values | PoolCalc"
+    description="Decode any capacitor code to get the value in pF, nF, and µF. Supports ceramic (EIA 3-digit), film capacitors, and tolerance letter codes. Free online capacitor decoder."
+    keywords="capacitor code calculator, ceramic capacitor calculator, capacitor value finder, capacitor decoder, capacitor pF nF uF calculator, ceramic capacitor 104, film capacitor value, capacitor marking calculator"
+    canonical="/capacitor-code"
+    schema={{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Capacitor Code Calculator",
+      "url": "https://poolcalculator.electropool.online/capacitor-code",
+      "description": "Free online capacitor code decoder. Convert ceramic and film capacitor markings to pF, nF, and µF instantly.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "mainEntity": {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does 104 mean on a capacitor?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The code 104 means 10 × 10⁴ picofarads = 100,000pF = 100nF = 0.1µF. This is the most common bypass capacitor value in digital electronics."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I convert capacitor pF to nF to µF?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1µF = 1,000nF = 1,000,000pF. 1nF = 1,000pF. So 100nF = 0.1µF = 100,000pF."
+            }
+          }
+        ]
+      }
+    }}
+  />
+
+
+================================================================================
+ CHANGE #8 — ADD RELATED CALCULATORS SECTION TO EACH PAGE
+ Priority: MEDIUM | Impact: Improved internal linking + reduced bounce rate
+================================================================================
+
+Create a new reusable component: src/components/RelatedTools.jsx
+
+  import React from 'react';
+  import { Link } from 'react-router-dom';
+
+  const ALL_TOOLS = [
+    { path: '/resistor-color-code', icon: '🌈', title: 'Resistor Color Code', desc: '4, 5 & 6 band decoder' },
+    { path: '/led-calculator',      icon: '💡', title: 'LED Resistor Calc',   desc: 'Series resistor finder' },
+    { path: '/smd-code',            icon: '⬛', title: 'SMD Resistor Code',   desc: '3-digit, 4-digit, EIA-96' },
+    { path: '/capacitor-code',      icon: '🔋', title: 'Capacitor Code',      desc: 'pF, nF, µF converter' },
+    { path: '/inductor-code',       icon: '🌀', title: 'Inductor Calculator', desc: 'Axial & SMD decoder' },
+  ];
+
+  export default function RelatedTools({ currentPath }) {
+    const others = ALL_TOOLS.filter(t => t.path !== currentPath);
+    return (
+      <section style={{ marginTop: '60px', paddingTop: '40px', borderTop: '1px solid var(--border-subtle)' }}>
+        <div className="section-label">Related Calculators</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px,1fr))', gap: '16px', marginTop: '20px' }}>
+          {others.map(tool => (
+            <Link key={tool.path} to={tool.path} style={{
+              display: 'flex', alignItems: 'center', gap: '12px',
+              padding: '16px', background: 'var(--bg-card)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-md)', textDecoration: 'none',
+              transition: 'var(--transition)'
+            }}>
+              <span style={{ fontSize: '24px' }}>{tool.icon}</span>
+              <div>
+                <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '2px' }}>{tool.title}</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{tool.desc}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+USAGE — Add at the bottom of each calculator page (before closing </div>):
+
+  import RelatedTools from '../components/RelatedTools';
+
+  // At the bottom of each calculator page:
+  <RelatedTools currentPath="/led-calculator" />
+  <RelatedTools currentPath="/resistor-color-code" />
+  // etc.
+
+
+================================================================================
+ CHANGE #9 — ADD noindex TO 404 PAGE
+ Priority: MEDIUM | Impact: Prevents soft 404 indexing issues
+================================================================================
+
+FILE: src/App.js
+
+CURRENT NotFound function:
+  function NotFound() {
+    return (
+      <div style={{textAlign:'center',padding:'80px 20px'}} role="alert">
+        ...
+      </div>
+    );
+  }
+
+REPLACE WITH:
+  function NotFound() {
+    return (
+      <>
+        <Helmet>
+          <meta name="robots" content="noindex, nofollow" />
+          <title>404 – Page Not Found | PoolCalc</title>
+        </Helmet>
+        <div style={{textAlign:'center',padding:'80px 20px'}} role="alert">
+          <div style={{fontSize:'64px',marginBottom:'16px'}} aria-hidden="true">⚡</div>
+          <h1 style={{fontSize:'32px',marginBottom:'12px'}}>404 – Page Not Found</h1>
+          <p style={{color:'var(--text-secondary)',marginBottom:'24px'}}>
+            The page you're looking for doesn't exist.
+          </p>
+          <Link to="/" className="btn-primary" style={{display:'inline-block',textDecoration:'none',padding:'12px 28px',background:'var(--accent)',color:'var(--bg-primary)',borderRadius:'var(--radius-sm)',fontWeight:'700'}}>
+            Go Home
+          </Link>
+        </div>
+      </>
+    );
+  }
+
+NOTE: Import Helmet at top of App.js:
+  import { Helmet } from 'react-helmet-async';
+
+
+================================================================================
+ CHANGE #10 — CONVERT IMAGES TO WEBP (Performance + SEO)
+ Priority: HIGH | Impact: Saves 3-4 MB per page load, dramatically improves LCP
+================================================================================
+
+This is a build-time operation, not a code change. Run this command in the
+project root (requires Node.js to be installed):
+
+  npm install -g @squoosh/cli
+  squoosh-cli --webp '{"quality":85}' public/images/*.png
+
+This generates .webp versions alongside the existing .png files.
+
+Then update image references in all calculator pages:
+
+CURRENT (example in LEDCalculator.jsx):
+  <img src="/images/calculator_resistorforled.png"
+       alt="LED Resistor Illustration"
+       loading="lazy" width="400" height="300" />
+
+REPLACE WITH:
+  <picture>
+    <source srcSet="/images/calculator_resistorforled.webp" type="image/webp" />
+    <img src="/images/calculator_resistorforled.png"
+         alt="LED circuit diagram showing series resistor calculation between supply voltage and LED"
+         loading="lazy" width="400" height="300" />
+  </picture>
+
+Apply this pattern to ALL img tags in:
+  LEDCalculator.jsx (2 images)
+  ResistorColorCode.jsx (2 images)
+  SMDCode.jsx (1 image)
+  CapacitorCode.jsx (2 images)
+  InductorCode.jsx (2 images)
+  Footer.jsx (1 background image → replace with tiny 50x50 thumbnail)
+
+IMPROVED ALT TEXTS (keyword-rich, descriptive):
+  calculator_resistorforled.png  → "LED resistor circuit diagram with series resistor formula"
+  calculator_resistor.png        → "Resistor color band diagram showing 4-band and 5-band codes"
+  calculator_descrip_resistor.png → "How to read resistor color code bands: digit, multiplier, tolerance"
+  calculator_descrip_resistorforled.png → "LED resistor formula diagram: R = (Vsupply - Vled) / Iled"
+  calculator_capacitor.png       → "Ceramic capacitor with 3-digit code marking example"
+  calculator_descrip_capacitor.png → "Capacitor code decoding guide showing pF nF µF conversion"
+  calculator_inductor.png        → "Axial inductor with color bands showing inductance value"
+  calculator_descrip_inductor.png → "Inductor color code identification guide for axial and SMD types"
+
+
+================================================================================
+ CHANGE #11 — UPDATE RESISTOR PAGE TITLE (Quick SEO Fix)
+ Priority: MEDIUM | Impact: Better SERP title for highest-traffic page
+================================================================================
+
+FILE: src/pages/ResistorColorCode.jsx
+
+FIND the SEOHead call and update title generation:
+
+CURRENT (in render):
+  title={`${mode.toUpperCase()} Resistor Calculator | PoolCalculator`}
+
+REPLACE WITH:
+  title={`${mode === '4-band' ? '4-Band' : mode === '5-band' ? '5-Band' : mode === '6-band' ? '6-Band' : 'SMD'} Resistor Color Code Calculator | PoolCalc`}
+
+ALSO UPDATE description:
+  description={`Decode ${mode.replace('-band',' band')} resistor color codes instantly. Find resistance value, tolerance${mode === '6-band' ? ', and temperature coefficient' : ''}. Free online resistor calculator.`}
+
+ALSO UPDATE keywords:
+  keywords="resistor color code calculator, resistor calculator, 4 band resistor, 5 band resistor, resistor value calculator, resistor color decoder, resistor band calculator, resistor tolerance calculator, EIA color code"
+
+
+================================================================================
+ CHANGE #12 — ADD GOOGLE SEARCH CONSOLE VERIFICATION TAG
+ Priority: HIGH | Impact: Required for all monitoring, sitemap submission, indexing
+================================================================================
+
+FILE: public/index.html
+
+ADD inside <head> after existing meta tags:
+  <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE" />
+
+How to get your verification code:
+  1. Go to https://search.google.com/search-console
+  2. Add property → URL prefix → enter your URL
+  3. Choose "HTML tag" verification method
+  4. Copy the content="..." value
+  5. Paste it in the tag above
+  6. Deploy, then click "Verify" in GSC
+
+
+================================================================================
+ CHANGE #13 — ADD ADS.TXT FILE
+ Priority: HIGH for AdSense | Impact: Required for full advertiser inventory
+================================================================================
+
+CREATE FILE: public/ads.txt
+
+CONTENT (replace pub-XXXXXXXXXX with your real AdSense publisher ID):
+  google.com, pub-XXXXXXXXXX, DIRECT, f08c47fec0942fa0
+
+This file MUST be accessible at:
+  https://poolcalculator.electropool.online/ads.txt
+
+Without ads.txt, Google's programmatic buyers will see your inventory as
+unverified and many won't bid, significantly reducing your RPM.
+Create this file IMMEDIATELY after receiving AdSense approval.
+
+
+================================================================================
+ COMPLETE IMPLEMENTATION CHECKLIST
+================================================================================
+
+WEEK 1 — Critical (do before deploying anything else):
+  [ ] Install react-snap: npm install --save-dev react-snap
+  [ ] Update package.json with postbuild script and reactSnap config
+  [ ] Update src/index.js to use hydrateRoot pattern
+  [ ] Update homepage SEOHead with new title, description, and WebSite/Organization schema
+  [ ] Update sitemap.xml with changefreq tags and priority 0.9 for all tools
+  [ ] Add Google Search Console verification meta tag to index.html
+  [ ] Deploy and test: npm run build → verify /led-calculator has unique HTML in build/
+
+WEEK 1-2 — Content (high SEO impact):
+  [ ] Add homepage SEO content section (Change #3)
+  [ ] Replace section-title divs with h2 on all calculator pages (Change #4)
+  [ ] Replace SMD description content with rich FAQ content (Change #6)
+  [ ] Replace Capacitor description content with rich FAQ content (Change #7)
+  [ ] Update SMD and Capacitor SEOHead calls with improved title/description/schema
+
+WEEK 2 — Performance & Linking:
+  [ ] Run squoosh-cli to generate WebP images
+  [ ] Update all img tags to <picture> with WebP + improved alt text
+  [ ] Replace main_footer.png with 50x50px tiny thumbnail
+  [ ] Create RelatedTools.jsx component (Change #8)
+  [ ] Add RelatedTools to each calculator page
+  [ ] Add noindex to 404 page (Change #9)
+
+WEEK 2-3 — Monitoring:
+  [ ] Verify domain in Google Search Console
+  [ ] Submit sitemap.xml to GSC
+  [ ] Request manual indexing for all 10 pages
+  [ ] Set up Google Analytics 4 (optional but recommended)
+  [ ] Post site on r/electronics and r/arduino with link
+
+AFTER ADSENSE APPROVAL:
+  [ ] Create public/ads.txt with real publisher ID
+  [ ] Replace ca-pub-XXXX in AdSlot.jsx and CookieConsent.jsx
+  [ ] Deploy updated build
+  [ ] Enable ads in Cloudflare with appropriate CSP headers
+
+
+================================================================================
+ EXPECTED RESULTS AFTER ALL CHANGES
+================================================================================
+
+  Metric                        Current (est.)    After Changes (est. 3 months)
+  ─────────────────────────────────────────────────────────────────────────────
+  Pages indexed by Google       1-3               All 10
+  Organic monthly visits        <50               500-2,000
+  Keywords ranking pos 1-50     <5                30-60
+  Page speed score (mobile)     45-55             70-82
+  LCP                           3-5 seconds       1.5-2.5 seconds
+  Schema markup pages           3                 All 7 (10 with blog)
+  AdSense approval probability  55%               85%
+  Content per page (est.)       150-400 words     600-1,000 words
+  Internal links per page       2-3               6-10
+
+
+================================================================================
+END OF FINAL_SEO_IMPLEMENTATION_REPORT.txt
+================================================================================

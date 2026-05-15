@@ -29,12 +29,21 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer-col">
-            <h4>Info</h4>
+            <h4>Resources</h4>
             <ul>
-              <li><Link to="/about">About</Link></li>
+              <li><Link to="/blog">Electronics Blog</Link></li>
+              <li><Link to="/blog/what-resistor-for-led">LED Resistor Guide</Link></li>
+              <li><Link to="/blog/how-to-read-resistor-color-codes">Color Code Guide</Link></li>
+              <li><Link to="/blog/eia-96-smd-resistor-code-guide">SMD Code Reference</Link></li>
+            </ul>
+          </div>
+          <div className="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li><Link to="/about">About Us</Link></li>
               <li><Link to="/contact">Contact</Link></li>
               <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-              <li><Link to="/terms">Terms &amp; Conditions</Link></li>
+              <li><Link to="/terms">Terms of Service</Link></li>
             </ul>
           </div>
         </div>

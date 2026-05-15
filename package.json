@@ -13,7 +13,38 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "react-snap",
     "test": "react-scripts test"
+  },
+  "reactSnap": {
+    "source": "build",
+    "destination": "build",
+    "include": [
+      "/",
+      "/led-calculator",
+      "/resistor-color-code",
+      "/smd-code",
+      "/capacitor-code",
+      "/inductor-code",
+      "/about",
+      "/contact",
+      "/privacy-policy",
+      "/terms",
+      "/blog",
+      "/blog/how-to-read-resistor-color-codes",
+      "/blog/what-resistor-for-led",
+      "/blog/eia-96-smd-resistor-code-guide"
+    ],
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "skipThirdPartyRequests": true,
+    "inlineCss": false,
+    "saveAs": "html"
+  },
+  "devDependencies": {
+    "react-snap": "^1.23.0"
   },
   "eslintConfig": {
     "extends": [

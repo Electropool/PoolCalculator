@@ -39,6 +39,7 @@ const navItems = [
       { label: 'Helical Inductor', path: '/inductor-code?type=helical' }
     ]
   },
+  { label: 'Blog', path: '/blog' }
 ];
 
 export default function Navbar() {

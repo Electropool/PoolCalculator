@@ -156,10 +156,13 @@ export default function LEDCalculator() {
           <div className="description-section card">
             <div className="description-layout">
               <div className="description-image">
-                <img src="/images/calculator_descrip_resistorforled.png" alt="LED Resistor Formula diagram" loading="lazy" width="600" height="400" />
+                <picture>
+                  <source srcSet="/images/calculator_descrip_resistorforled.webp" type="image/webp" />
+                  <img src="/images/calculator_descrip_resistorforled.png" alt="LED resistor formula diagram: R = (Vsupply - Vled) / Iled" loading="lazy" width="600" height="400" />
+                </picture>
               </div>
               <div className="description-text">
-                <div className="section-title">How to Calculate LED Resistors</div>
+                <h2 className="section-title">How to Calculate LED Resistors</h2>
                 <p>
                   To protect an LED from burning out, a series resistor must be used to limit the current. 
                   The value of this resistor depends on the supply voltage, the LED's forward voltage (which varies by color), 
@@ -192,6 +195,7 @@ export default function LEDCalculator() {
               </div>
             </div>
           </div>
+          <RelatedTools currentPath="/led-calculator" />
         </div>
       </div>
     </>

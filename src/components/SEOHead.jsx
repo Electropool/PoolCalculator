@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-export default function SEOHead({ title, description, keywords, canonical, type = 'website', schema }) {
+export default function SEOHead({ title, description, keywords, canonical, type = 'website', schema, noindex }) {
   const base = 'https://poolcalculator.electropool.online';
   const fullUrl = `${base}${canonical || ''}`;
   const ogImage = `${base}/og-image.png`;
@@ -10,6 +10,7 @@ export default function SEOHead({ title, description, keywords, canonical, type 
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
       {keywords && <meta name="keywords" content={keywords} />}
       <link rel="canonical" href={fullUrl} />
 

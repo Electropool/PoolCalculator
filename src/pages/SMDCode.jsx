@@ -50,17 +50,47 @@ export default function SMDCode() {
     "@type": "WebApplication",
     "name": "SMD Resistor Code Calculator",
     "url": "https://poolcalculator.electropool.online/smd-code",
-    "description": "Professional SMD resistor code decoder for 3-digit, 4-digit, and EIA-96 markings.",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "All"
+    "description": "Decode SMD resistor codes: 3-digit, 4-digit, EIA-96, and R-notation. Instant resistance value lookup for surface-mount resistors.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "mainEntity": {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does R notation mean on an SMD resistor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When the marking contains R, it represents a decimal point. So 4R7 = 4.7Ω, R47 = 0.47Ω, and 1R0 = 1.0Ω. This notation is used for low-value resistors where a decimal would be difficult to print clearly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does 000 mean on an SMD component?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A marking of 0, 000, or 0000 indicates a jumper resistor — a zero-ohm component used to create a short circuit or bridge connection on a PCB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I decode an EIA-96 SMD resistor code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "EIA-96 codes use 2 digits followed by a letter. The digits (01-96) reference a lookup table of 96 base values, and the letter is the multiplier. For example, 01C means base value 100 × multiplier C (100) = 10kΩ."
+          }
+        }
+      ]
+    }
   };
 
   return (
     <>
       <SEOHead
-        title="SMD Resistor Code Calculator – 3 & 4 Digit, EIA-96 | PoolCalculator"
-        description="Decode SMD resistor codes (3-digit, 4-digit, and EIA-96). Enter the code on the resistor to find its value in Ohms instantly."
-        keywords="smd resistor code, smd calculator, eia-96 code, 3 digit smd code, 4 digit smd code"
+        title="SMD Resistor Code Calculator – 3-Digit, 4-Digit & EIA-96 Decoder | PoolCalc"
+        description="Decode any SMD resistor code instantly. Supports 3-digit, 4-digit, EIA-96 (01C format), and R-notation (4R7). Free online surface-mount resistor value finder."
+        keywords="SMD resistor code calculator, SMD resistor decoder, EIA-96 resistor code, 3 digit SMD resistor, 4 digit SMD resistor, surface mount resistor value, PCB resistor code"
         canonical="/smd-code"
         schema={schema}
       />
@@ -73,7 +103,7 @@ export default function SMDCode() {
 
           <div className="calc-layout">
             <div className="card">
-              <div className="section-title">Enter SMD Code</div>
+              <h2 className="section-title">Enter SMD Code</h2>
               <div className="input-group">
                 <label>SMD Marking (e.g. 103, 4702, 01C)</label>
                 <input
@@ -87,7 +117,7 @@ export default function SMDCode() {
               {error && <p style={{color:'var(--error)',fontSize:'13px',marginBottom:'12px'}}>{error}</p>}
               <button className="btn-primary" onClick={calculate}>Decode SMD</button>
               <div style={{marginTop:'24px'}}>
-                <div className="section-title">Quick Examples</div>
+                <h2 className="section-title">Quick Examples</h2>
                 <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
                   {['103','4702','01C','100','R10'].map(ex => (
                     <button key={ex} className="btn-secondary" onClick={() => { setCode(ex); calculate(); }}>{ex}</button>
@@ -97,7 +127,10 @@ export default function SMDCode() {
             </div>
 
             <div className="hero-image-container">
-              <img src="/images/calculator_resistor.png" alt="SMD Resistor Examples" className="hero-img" loading="lazy" width="400" height="300" />
+              <picture>
+                <source srcSet="/images/calculator_resistor.webp" type="image/webp" />
+                <img src="/images/calculator_resistor.png" alt="Resistor color band diagram showing 4-band and 5-band codes" className="hero-img" loading="lazy" width="400" height="300" />
+              </picture>
             </div>
           </div>
 
