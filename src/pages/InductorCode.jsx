@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import AdSlot from '../components/AdSlot';
+import RelatedTools from '../components/RelatedTools';
 
 const COLORS = [
   { name: 'Black',  hex: '#1a1a1a', digit: 0, multiplier: 1,      tolerance: null },

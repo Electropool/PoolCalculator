@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SEOHead from '../components/SEOHead';
 import AdSlot from '../components/AdSlot';
+import RelatedTools from '../components/RelatedTools';
 
 export default function LEDCalculator() {
   const [vs, setVs] = useState('');
